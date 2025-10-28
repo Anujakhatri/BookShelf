@@ -3,354 +3,271 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Save - SelfScanner AI</title>
+    <title>Your Saved Books – BookShelf</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#6366f1',
-                        secondary: '#10b981'
-                    }
-                }
-            }
-        }
-    </script>
 </head>
-<body class="bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50 min-h-screen relative">
-    <!-- Sidebar Overlay -->
-    <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden transition-opacity duration-300"></div>
-    
-    <!-- Sidebar -->
-    <div id="sidebar" class="fixed left-0 top-0 h-full w-80 bg-white shadow-xl z-50 transform -translate-x-full transition-transform duration-300 ease-in-out">
-        <div class="p-6">
-            <div class="flex items-center justify-between mb-8">
-                <h2 class="text-2xl font-bold text-indigo-600">SelfScanner</h2>
-                <button id="close-sidebar" class="text-gray-500 hover:text-gray-700 transition duration-200">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </button>
-            </div>
-            
-            <!-- About Us Section -->
-            <div class="space-y-6">
-                <div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-3">About Book SelfScanner</h3>
-                    <div class="bg-indigo-50 rounded-lg p-4">
-                        <p class="text-sm text-indigo-700">
-                            Book SelfScanner is an AI-powered system that helps users identify, scan, and organize books efficiently. It allows you to scan book covers or upload book data, and the system automatically detects titles, authors, and related information using intelligent recognition models.
-                        </p>
-                    </div>
-                </div>
-                
-                <!-- Quick Stats -->
-                <div class="border-t pt-6">
-                    <h4 class="font-medium text-gray-900 mb-4">Quick Stats</h4>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="text-center">
-                            <div class="text-xl font-bold text-indigo-600">10K+</div>
-                            <div class="text-xs text-gray-600">Books Scanned</div>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-xl font-bold text-emerald-600">5K+</div>
-                            <div class="text-xs text-gray-600">Happy Users</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<body class="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 min-h-screen">
 
     <!-- Navigation Bar -->
-    <nav class="bg-white shadow-lg sticky top-0 z-30">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <!-- Left side - SelfScanner hamburger menu -->
-                <div class="flex items-center">
-                    <button id="open-sidebar" class="flex items-center space-x-3 text-gray-700 hover:text-indigo-600 transition duration-200">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                        <span class="text-lg font-semibold">SelfScanner</span>
-                    </button>
-                </div>
-                
-                <!-- Right side - Navigation links -->
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="index.html" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-200">Home</a>
-                        <a href="scan.html" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-200">Scan</a>
-                        <a href="save.html" class="text-indigo-600 bg-indigo-100 px-3 py-2 rounded-md text-sm font-medium">Save</a>
-                        <a href="contact.html" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-200">Contact Us</a>
-                    </div>
-                </div>
-                
-                <!-- Mobile navigation button -->
-                <div class="md:hidden">
-                    <button type="button" class="text-gray-700 hover:text-indigo-600 focus:outline-none focus:text-indigo-600" id="mobile-menu-btn">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <!-- Hamburger to open sidebar -->
+                    <button id="openSidebar" class="p-2 rounded-md hover:bg-purple-50 focus:outline-none focus:ring-2 focus:ring-purple-500" aria-label="Open menu">
+                        <svg class="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
                     </button>
+                    <span class="text-2xl font-bold text-purple-600">📚 BookShelf</span>
                 </div>
-            </div>
-            
-            <!-- Mobile navigation menu -->
-            <div class="md:hidden hidden" id="mobile-menu">
-                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gray-50 rounded-lg mt-2">
-                    <a href="index.html" class="text-gray-700 hover:text-indigo-600 block px-3 py-2 rounded-md text-base font-medium transition duration-200">Home</a>
-                    <a href="scan.html" class="text-gray-700 hover:text-indigo-600 block px-3 py-2 rounded-md text-base font-medium transition duration-200">Scan</a>
-                    <a href="save.html" class="text-indigo-600 bg-indigo-100 block px-3 py-2 rounded-md text-base font-medium">Save</a>
-                    <a href="contact.html" class="text-gray-700 hover:text-indigo-600 block px-3 py-2 rounded-md text-base font-medium transition duration-200">Contact Us</a>
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="index.html" class="text-gray-600 hover:text-purple-600 transition">Home</a>
+                    <a href="scan.html" class="text-gray-600 hover:text-purple-600 transition">Scan</a>
+                    <a href="save.html" class="text-purple-600 font-semibold hover:text-purple-800 transition">Saved</a>
+                    <a href="contact.html" class="text-gray-600 hover:text-purple-600 transition">Contact</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <!-- Header Section -->
-        <div class="text-center mb-12">
-            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                Save your favorite books
-            </h1>
-            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                Keep track of all the books you've discovered and want to read
-            </p>
-        </div>
-
-        <!-- Stats Section -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            <div class="bg-white rounded-lg shadow-md p-6 text-center">
-                <div class="text-3xl font-bold text-indigo-600 mb-2">24</div>
-                <div class="text-gray-600">Saved Books</div>
-            </div>
-            <div class="bg-white rounded-lg shadow-md p-6 text-center">
-                <div class="text-3xl font-bold text-emerald-600 mb-2">8</div>
-                <div class="text-gray-600">Completed</div>
-            </div>
-            <div class="bg-white rounded-lg shadow-md p-6 text-center">
-                <div class="text-3xl font-bold text-purple-600 mb-2">16</div>
-                <div class="text-gray-600">To Read</div>
-            </div>
-        </div>
-
-        <!-- Filter Tabs -->
-        <div class="flex flex-wrap justify-center mb-8">
-            <button class="px-6 py-2 bg-indigo-600 text-white rounded-lg mr-2 mb-2 font-medium">All</button>
-            <button class="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg mr-2 mb-2 font-medium hover:bg-gray-300 transition duration-200">To Read</button>
-            <button class="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg mr-2 mb-2 font-medium hover:bg-gray-300 transition duration-200">Reading</button>
-            <button class="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg mr-2 mb-2 font-medium hover:bg-gray-300 transition duration-200">Completed</button>
-        </div>
-
-        <!-- Saved Books Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
-            <!-- Saved Book 1 -->
-            <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden group">
-                <div class="h-48 bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center relative">
-                    <span class="text-white text-5xl">📖</span>
-                    <div class="absolute top-2 right-2">
-                        <span class="bg-emerald-100 text-emerald-800 text-xs px-2 py-1 rounded-full font-medium">Completed</span>
-                    </div>
+    <!-- Sidebar overlay and panel -->
+    <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-50 hidden"></div>
+    <aside id="sidebarPanel" class="fixed left-0 top-0 h-full w-80 bg-white shadow-2xl z-50 -translate-x-full transition-transform duration-300">
+        <div class="p-6 h-full flex flex-col">
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center space-x-2">
+                    <span class="text-2xl">📚</span>
+                    <span class="text-xl font-bold text-purple-600">BookShelf</span>
                 </div>
-                <div class="p-4">
-                    <h3 class="font-semibold text-gray-900 mb-1 text-sm">The Great Gatsby</h3>
-                    <p class="text-gray-600 text-xs mb-2">F. Scott Fitzgerald</p>
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center">
-                            <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 24 24">
-                                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
-                            </svg>
-                            <span class="text-xs text-gray-600 ml-1">4.5</span>
-                        </div>
-                        <button class="text-red-500 hover:text-red-600 text-xs font-medium">Remove</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Saved Book 2 -->
-            <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden group">
-                <div class="h-48 bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center relative">
-                    <span class="text-white text-5xl">📚</span>
-                    <div class="absolute top-2 right-2">
-                        <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full font-medium">Reading</span>
-                    </div>
-                </div>
-                <div class="p-4">
-                    <h3 class="font-semibold text-gray-900 mb-1 text-sm">To Kill a Mockingbird</h3>
-                    <p class="text-gray-600 text-xs mb-2">Harper Lee</p>
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center">
-                            <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 24 24">
-                                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
-                            </svg>
-                            <span class="text-xs text-gray-600 ml-1">4.8</span>
-                        </div>
-                        <button class="text-red-500 hover:text-red-600 text-xs font-medium">Remove</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Saved Book 3 -->
-            <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden group">
-                <div class="h-48 bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center relative">
-                    <span class="text-white text-5xl">📖</span>
-                    <div class="absolute top-2 right-2">
-                        <span class="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded-full font-medium">To Read</span>
-                    </div>
-                </div>
-                <div class="p-4">
-                    <h3 class="font-semibold text-gray-900 mb-1 text-sm">1984</h3>
-                    <p class="text-gray-600 text-xs mb-2">George Orwell</p>
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center">
-                            <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 24 24">
-                                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
-                            </svg>
-                            <span class="text-xs text-gray-600 ml-1">4.7</span>
-                        </div>
-                        <button class="text-red-500 hover:text-red-600 text-xs font-medium">Remove</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Saved Book 4 -->
-            <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden group">
-                <div class="h-48 bg-gradient-to-br from-pink-400 to-rose-500 flex items-center justify-center relative">
-                    <span class="text-white text-5xl">📚</span>
-                    <div class="absolute top-2 right-2">
-                        <span class="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded-full font-medium">To Read</span>
-                    </div>
-                </div>
-                <div class="p-4">
-                    <h3 class="font-semibold text-gray-900 mb-1 text-sm">Pride and Prejudice</h3>
-                    <p class="text-gray-600 text-xs mb-2">Jane Austen</p>
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center">
-                            <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 24 24">
-                                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
-                            </svg>
-                            <span class="text-xs text-gray-600 ml-1">4.6</span>
-                        </div>
-                        <button class="text-red-500 hover:text-red-600 text-xs font-medium">Remove</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Empty State Book Cards -->
-            <div class="bg-white rounded-xl border-2 border-dashed border-gray-300 flex items-center justify-center h-64 group hover:border-indigo-400 transition-colors duration-200 cursor-pointer">
-                <div class="text-center">
-                    <div class="mx-auto w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-indigo-100 transition-colors duration-200">
-                        <svg class="w-6 h-6 text-gray-400 group-hover:text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                        </svg>
-                    </div>
-                    <p class="text-gray-500 text-sm">Add more books</p>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-xl border-2 border-dashed border-gray-300 flex items-center justify-center h-64 group hover:border-indigo-400 transition-colors duration-200 cursor-pointer">
-                <div class="text-center">
-                    <div class="mx-auto w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-indigo-100 transition-colors duration-200">
-                        <svg class="w-6 h-6 text-gray-400 group-hover:text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                        </svg>
-                    </div>
-                    <p class="text-gray-500 text-sm">Add more books</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Quick Actions -->
-        <div class="text-center bg-white rounded-xl shadow-md p-8">
-            <h3 class="text-xl font-semibold text-gray-900 mb-4">Add More Books to Your Collection</h3>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="scan.html" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-8 rounded-lg transition duration-200 inline-flex items-center justify-center">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                <button id="closeSidebar" class="p-2 rounded-md hover:bg-gray-100" aria-label="Close menu">
+                    <svg class="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
-                    Scan New Book
-                </a>
-                <button class="border border-gray-300 hover:border-gray-400 text-gray-700 font-medium py-3 px-8 rounded-lg transition duration-200 inline-flex items-center justify-center">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
-                    </svg>
-                    Import List
                 </button>
             </div>
+            <div class="space-y-4 mb-6">
+                <h3 class="text-lg font-semibold text-gray-800">About this project</h3>
+                <p class="text-sm text-gray-600 leading-relaxed">
+                    Save your favorite recommendations to revisit later. Manage your reading list with view and remove options.
+                </p>
+            </div>
+            <nav class="space-y-2">
+                <a href="index.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-purple-50">
+                    <span>🏠</span><span class="text-gray-800">Home</span>
+                </a>
+                <a href="scan.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-purple-50">
+                    <span>🔍</span><span class="text-gray-800">Scan</span>
+                </a>
+                <a href="save.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-purple-50">
+                    <span>❤️</span><span class="text-gray-800">Saved</span>
+                </a>
+                <a href="contact.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-purple-50">
+                    <span>✉️</span><span class="text-gray-800">Contact</span>
+                </a>
+            </nav>
+            <div class="mt-auto pt-6 text-xs text-gray-400">v1.0 • Learning demo</div>
         </div>
-    </main>
+    </aside>
 
-    <!-- JavaScript for sidebar, mobile menu and filter functionality -->
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        
+        <!-- Page Title -->
+        <div class="text-center mb-10">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+                ❤️ Your Saved Books
+            </h1>
+            <p class="text-gray-600">Manage your reading list and discover what to read next</p>
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="hidden text-center py-20">
+            <div class="text-8xl mb-6">📖</div>
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">No saved books yet</h2>
+            <p class="text-gray-600 mb-8">Start by getting recommendations and saving books you like!</p>
+            <a href="scan.html" class="inline-block bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-700 transform hover:scale-105 transition duration-300">
+                Get Recommendations →
+            </a>
+        </div>
+
+        <!-- Books Grid -->
+        <div id="booksGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Books will be inserted here by JavaScript -->
+        </div>
+
+    </div>
+
+    <!-- Modal for Book Details -->
+    <div id="bookModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg max-w-2xl w-full p-8 max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 text-2xl float-right mb-4">✕</button>
+            <div id="modalContent">
+                <!-- Modal content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Sidebar functionality
-        const openSidebarBtn = document.getElementById('open-sidebar');
-        const closeSidebarBtn = document.getElementById('close-sidebar');
-        const sidebar = document.getElementById('sidebar');
-        const sidebarOverlay = document.getElementById('sidebar-overlay');
+        // Sidebar open/close handlers
+        (function() {
+            const openBtn = document.getElementById('openSidebar');
+            const closeBtn = document.getElementById('closeSidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const panel = document.getElementById('sidebarPanel');
 
-        // Open sidebar
-        openSidebarBtn.addEventListener('click', function() {
-            sidebar.classList.remove('-translate-x-full');
-            sidebarOverlay.classList.remove('hidden');
-            document.body.style.overflow = 'hidden'; // Prevent background scrolling
-        });
+            function open() {
+                panel.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+            function close() {
+                panel.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+            openBtn && openBtn.addEventListener('click', open);
+            closeBtn && closeBtn.addEventListener('click', close);
+            overlay && overlay.addEventListener('click', close);
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+        })();
 
-        // Close sidebar
-        function closeSidebar() {
-            sidebar.classList.add('-translate-x-full');
-            sidebarOverlay.classList.add('hidden');
-            document.body.style.overflow = ''; // Restore scrolling
+        // API Base URL - FastAPI backend
+        const API_BASE_URL = 'http://localhost:8000';
+
+        // Get references to DOM elements
+        const booksGrid = document.getElementById('booksGrid');
+        const emptyState = document.getElementById('emptyState');
+        const bookModal = document.getElementById('bookModal');
+        const modalContent = document.getElementById('modalContent');
+
+        // Store current books globally
+        let savedBooks = [];
+
+        // Display saved books on page load
+        displaySavedBooks();
+
+        async function displaySavedBooks() {
+            try {
+                // Fetch saved books from FastAPI
+                const response = await fetch(`${API_BASE_URL}/saved-books`);
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch saved books');
+                }
+
+                const data = await response.json();
+                savedBooks = data.saved_books || [];
+
+                // Show empty state if no books
+                if (savedBooks.length === 0) {
+                    emptyState.classList.remove('hidden');
+                    booksGrid.classList.add('hidden');
+                    return;
+                }
+
+                // Show books grid if there are books
+                emptyState.classList.add('hidden');
+                booksGrid.classList.remove('hidden');
+
+                // Clear previous books
+                booksGrid.innerHTML = '';
+
+                // Display each saved book as a card
+                savedBooks.forEach((book, index) => {
+                    const bookCard = document.createElement('div');
+                    bookCard.className = 'bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition duration-300 transform hover:-translate-y-2';
+                    bookCard.innerHTML = `
+                        <div class="text-5xl mb-4 text-center">📚</div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3 text-center">${book.title}</h3>
+                        <p class="text-gray-600 mb-6 text-sm line-clamp-3">${book.description}</p>
+                        <div class="space-y-3">
+                            <button onclick="viewBook(${index})" class="w-full bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition">
+                                👁️ View Details
+                            </button>
+                            <button onclick="removeBook(${book.id})" class="w-full bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">
+                                🗑️ Remove
+                            </button>
+                        </div>
+                    `;
+                    booksGrid.appendChild(bookCard);
+                });
+            } catch (error) {
+                console.error('Error fetching saved books:', error);
+                alert('⚠️ Failed to load saved books. Make sure the FastAPI server is running on http://localhost:8000');
+            }
         }
 
-        closeSidebarBtn.addEventListener('click', closeSidebar);
-        sidebarOverlay.addEventListener('click', closeSidebar);
+        // Store current books in global variable for modal access
+        function getSavedBooks() {
+            return savedBooks;
+        }
 
-        // Close sidebar on Escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeSidebar();
+        // View book details in modal
+        function viewBook(index) {
+            const savedBooks = getSavedBooks();
+            const book = savedBooks[index];
+
+            modalContent.innerHTML = `
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">${book.title}</h2>
+                <div class="border-t border-gray-200 pt-4">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-2">Description</h3>
+                    <p class="text-gray-600 leading-relaxed mb-6">${book.description}</p>
+                </div>
+                <div class="flex space-x-4 mt-6">
+                    <button onclick="closeModal()" class="flex-1 bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition">
+                        Close
+                    </button>
+                    <button onclick="removeBookFromModal(${index})" class="flex-1 bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition">
+                        Remove from List
+                    </button>
+                </div>
+            `;
+
+            bookModal.classList.remove('hidden');
+        }
+
+        // Remove book from FastAPI backend
+        async function removeBook(bookId) {
+            if (confirm('Are you sure you want to remove this book?')) {
+                try {
+                    const response = await fetch(`${API_BASE_URL}/saved-books/${bookId}`, {
+                        method: 'DELETE'
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Failed to remove book');
+                    }
+
+                    // Refresh the list
+                    displaySavedBooks();
+                    alert('✨ Book removed successfully!');
+                } catch (error) {
+                    console.error('Error removing book:', error);
+                    alert('⚠️ Failed to remove book. Make sure the FastAPI server is running.');
+                }
+            }
+        }
+
+        // Remove book from modal
+        function removeBookFromModal(index) {
+            const book = getSavedBooks()[index];
+            removeBook(book.id);
+            closeModal();
+        }
+
+        // Close modal
+        function closeModal() {
+            bookModal.classList.add('hidden');
+        }
+
+        // Close modal when clicking outside
+        bookModal.addEventListener('click', function(e) {
+            if (e.target === bookModal) {
+                closeModal();
             }
         });
-
-        // Mobile menu functionality
-        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenu.classList.toggle('hidden');
-        });
-
-        // Filter tabs functionality
-        const filterButtons = document.querySelectorAll('button');
-        filterButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                // Remove active class from all buttons
-                filterButtons.forEach(btn => {
-                    btn.classList.remove('bg-indigo-600', 'text-white');
-                    btn.classList.add('bg-gray-200', 'text-gray-700');
-                });
-                
-                // Add active class to clicked button
-                this.classList.remove('bg-gray-200', 'text-gray-700');
-                this.classList.add('bg-indigo-600', 'text-white');
-                
-                // Here you would typically filter the books based on the selected category
-                console.log('Filter changed to:', this.textContent);
-            });
-        });
-
-        // Remove book functionality (placeholder)
-        document.querySelectorAll('button:contains("Remove")').forEach(button => {
-            button.addEventListener('click', function() {
-                if (confirm('Are you sure you want to remove this book from your collection?')) {
-                    this.closest('.bg-white').style.opacity = '0.5';
-                    // Here you would typically make an API call to remove the book
-                    console.log('Book removed');
-                }
-            });
-        });
     </script>
+
 </body>
 </html>

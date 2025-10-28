@@ -3,531 +3,349 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scan - SelfScanner AI</title>
+    <title>Pick Your Reading Taste! – BookShelf</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#6366f1',
-                        secondary: '#10b981'
-                    }
-                }
-            }
-        }
-    </script> -->
 </head>
-<body class="bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50 min-h-screen relative">
-    <!-- Sidebar Overlay -->
-    <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden transition-opacity duration-300"></div>
-    
-    <!-- Sidebar -->
-    <div id="sidebar" class="fixed left-0 top-0 h-full w-80 bg-white/95 backdrop-blur-xl shadow-2xl z-50 transform -translate-x-full transition-transform duration-300 ease-in-out border-r border-white/20">
-        <div class="p-6">
-            <div class="flex items-center justify-between mb-8">
-                <h2 class="text-2xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent">SelfScanner</h2>
-                <button id="close-sidebar" class="text-gray-500 hover:text-gray-700 transition duration-200">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </button>
-            </div>
-            
-            <!-- About Us Section -->
-            <div class="space-y-6">
-                <div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-3">About Book SelfScanner</h3>
-                    <div class="bg-indigo-50 rounded-lg p-4">
-                        <p class="text-sm text-indigo-700">
-                            Book SelfScanner is an AI-powered system that helps users identify, scan, and organize books efficiently. It allows you to scan book covers or upload book data, and the system automatically detects titles, authors, and related information using intelligent recognition models.
-                        </p>
-                    </div>
-                </div>
-                
-                <!-- Quick Stats -->
-                <!-- <div class="border-t pt-6">
-                    <h4 class="font-medium text-gray-900 mb-4">Quick Stats</h4>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="text-center">
-                            <div class="text-xl font-bold text-indigo-600">10K+</div>
-                            <div class="text-xs text-gray-600">Books Scanned</div>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-xl font-bold text-emerald-600">5K+</div>
-                            <div class="text-xs text-gray-600">Happy Users</div>
-                        </div>
-                    </div>
-                </div> -->
-            </div>
-        </div>
-    </div>
+<body class="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 min-h-screen">
 
     <!-- Navigation Bar -->
-    <nav class="bg-white shadow-lg sticky top-0 z-30">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <!-- Left side - SelfScanner hamburger menu -->
-                <div class="flex items-center">
-                    <button id="open-sidebar" class="flex items-center space-x-3 text-gray-700 hover:text-indigo-600 transition duration-200">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                        <span class="text-lg font-semibold">SelfScanner</span>
-                    </button>
-                </div>
-                
-                <!-- Right side - Navigation links -->
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="index.html" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-200">Home</a>
-                        <a href="scan.html" class="text-indigo-600 bg-indigo-100 px-3 py-2 rounded-md text-sm font-medium">Scan</a>
-                        <a href="save.html" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-200">Save</a>
-                        <a href="contact.html" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-200">Contact Us</a>
-                    </div>
-                </div>
-                
-                <!-- Mobile navigation button -->
-                <div class="md:hidden">
-                    <button type="button" class="text-gray-700 hover:text-indigo-600 focus:outline-none focus:text-indigo-600" id="mobile-menu-btn">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <!-- Hamburger to open sidebar -->
+                    <button id="openSidebar" class="p-2 rounded-md hover:bg-purple-50 focus:outline-none focus:ring-2 focus:ring-purple-500" aria-label="Open menu">
+                        <svg class="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
                     </button>
+                    <span class="text-2xl font-bold text-purple-600">📚 BookShelf</span>
                 </div>
-            </div>
-            
-            <!-- Mobile navigation menu -->
-            <div class="md:hidden hidden" id="mobile-menu">
-                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gray-50 rounded-lg mt-2">
-                    <a href="index.html" class="text-gray-700 hover:text-indigo-600 block px-3 py-2 rounded-md text-base font-medium transition duration-200">Home</a>
-                    <a href="scan.html" class="text-indigo-600 bg-indigo-100 block px-3 py-2 rounded-md text-base font-medium">Scan</a>
-                    <a href="save.html" class="text-gray-700 hover:text-indigo-600 block px-3 py-2 rounded-md text-base font-medium transition duration-200">Save</a>
-                    <a href="contact.html" class="text-gray-700 hover:text-indigo-600 block px-3 py-2 rounded-md text-base font-medium transition duration-200">Contact Us</a>
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="index.html" class="text-gray-600 hover:text-purple-600 transition">Home</a>
+                    <a href="scan.html" class="text-purple-600 font-semibold hover:text-purple-800 transition">Scan</a>
+                    <a href="save.html" class="text-gray-600 hover:text-purple-600 transition">Saved</a>
+                    <a href="contact.html" class="text-gray-600 hover:text-purple-600 transition">Contact</a>
                 </div>
             </div>
         </div>
     </nav>
 
+    <!-- Sidebar overlay and panel -->
+    <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-50 hidden"></div>
+    <aside id="sidebarPanel" class="fixed left-0 top-0 h-full w-80 bg-white shadow-2xl z-50 -translate-x-full transition-transform duration-300">
+        <div class="p-6 h-full flex flex-col">
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center space-x-2">
+                    <span class="text-2xl">📚</span>
+                    <span class="text-xl font-bold text-purple-600">BookShelf</span>
+                </div>
+                <button id="closeSidebar" class="p-2 rounded-md hover:bg-gray-100" aria-label="Close menu">
+                    <svg class="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="space-y-4 mb-6">
+                <h3 class="text-lg font-semibold text-gray-800">About this project</h3>
+                <p class="text-sm text-gray-600 leading-relaxed">
+                    Upload a book cover, choose your favorite genres, and get AI-like recommendations. Save the best picks to your list.
+                </p>
+            </div>
+            <nav class="space-y-2">
+                <a href="index.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-purple-50">
+                    <span>🏠</span><span class="text-gray-800">Home</span>
+                </a>
+                <a href="scan.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-purple-50">
+                    <span>🔍</span><span class="text-gray-800">Scan</span>
+                </a>
+                <a href="save.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-purple-50">
+                    <span>❤️</span><span class="text-gray-800">Saved</span>
+                </a>
+                <a href="contact.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-purple-50">
+                    <span>✉️</span><span class="text-gray-800">Contact</span>
+                </a>
+            </nav>
+            <div class="mt-auto pt-6 text-xs text-gray-400">v1.0 • Learning demo</div>
+        </div>
+    </aside>
+
     <!-- Main Content -->
-    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <!-- Hero Section -->
-        <div class="text-center mb-16">
-            <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-                Scan your book with AI
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        
+        <!-- Page Title -->
+        <div class="text-center mb-10">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+                🔍 Pick Your Reading Taste!
             </h1>
-            <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-                Upload your book cover or scan a book to discover more about it, get recommendations, and add it to your collection.
-            </p>
+            <p class="text-gray-600">Follow the steps below to get personalized book recommendations</p>
         </div>
 
-        <!-- Three-Step Process Section -->
-        <div class="max-w-6xl mx-auto">
-            <!-- Progress Indicator -->
-            <div class="flex justify-center mb-12">
-                <div class="flex items-center space-x-4">
-                    <div id="progress-1" class="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-bold shadow-lg transition-all duration-300">1</div>
-                    <div id="progress-line-1" class="w-16 h-1 bg-gray-300 rounded transition-all duration-500"></div>
-                    <div id="progress-2" class="flex items-center justify-center w-10 h-10 rounded-full bg-gray-300 text-gray-500 font-bold transition-all duration-300">2</div>
-                    <div id="progress-line-2" class="w-16 h-1 bg-gray-300 rounded transition-all duration-500"></div>
-                    <div id="progress-3" class="flex items-center justify-center w-10 h-10 rounded-full bg-gray-300 text-gray-500 font-bold transition-all duration-300">3</div>
-                </div>
+        <!-- Step 1: Upload Photo -->
+        <div class="bg-white rounded-lg shadow-md p-8 mb-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Step 1: Upload a Book Photo</h2>
+            <div class="border-2 border-dashed border-purple-300 rounded-lg p-8 text-center">
+                <input type="file" id="bookPhoto" accept="image/*" class="hidden">
+                <label for="bookPhoto" class="cursor-pointer block">
+                    <div class="text-6xl mb-4">📷</div>
+                    <p class="text-gray-600 mb-2">Click to upload or drag and drop</p>
+                    <p class="text-sm text-gray-400">PNG, JPG, GIF up to 10MB</p>
+                </label>
             </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Step 1: Upload Book Photo -->
-                <div id="step-1" class="bg-white rounded-2xl shadow-xl p-8 border border-gray-100 hover:shadow-2xl transition-all duration-300">
-                    <div class="text-center">
-                        <!-- <div class="bg-gradient-to-r from-indigo-100 to-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
-                            <svg class="w-8 h-8 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                            </svg>
-                        </div> -->
-                        
-                        <div class="bg-indigo-100 text-indigo-800 text-sm font-semibold px-3 py-1 rounded-full inline-block mb-4">Step 1</div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-4">Upload Book Photo</h3>
-                        <p class="text-gray-600 mb-6">Upload a photo of your book cover to get started with AI recognition</p>
-                        
-                        <!-- Upload Area -->
-                        <div id="upload-area" class="border-2 border-dashed border-gray-300 rounded-lg p-6 hover:border-indigo-400 hover:bg-indigo-50 transition-all duration-200 cursor-pointer mb-4">
-                            <div class="text-center">
-                                <svg class="w-8 h-8 text-gray-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
-                                </svg>
-                                <p class="text-sm text-gray-600 mb-2">Click to upload or drag & drop</p>
-                                <p class="text-xs text-gray-500">PNG, JPG up to 10MB</p>
-                            </div>
-                            <input type="file" id="book-upload" accept="image/*" class="hidden">
-                        </div>
-                        
-                        <div id="upload-success" class="hidden text-green-600 font-semibold mb-4">
-                            ✅ Photo uploaded successfully!
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Step 2: Set Preferences -->
-                <div id="step-2" class="bg-white rounded-2xl shadow-xl p-8 border border-gray-100 hover:shadow-2xl transition-all duration-300 opacity-50">
-                    <div class="text-center">
-                        <!-- <div class="bg-gradient-to-r from-teal-100 to-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
-                            <svg class="w-8 h-8 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"></path>
-                            </svg>
-                        </div> -->
-                        
-                        <div class="bg-teal-100 text-teal-800 text-sm font-semibold px-3 py-1 rounded-full inline-block mb-4">Step 2</div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-4">Pick Your Reading Taste!</h3>
-                        <p class="text-gray-600 mb-6">Choose your favorite genres to get personalized recommendations</p>
-                        <p id="uploadWarning" class="text-center text-red-500 hidden mb-4">Please upload a book photo first.</p>
-                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 text-center">
-                        <!-- Genre Buttons -->
-                        </div>
-                        <!-- Genre Tags -->
-                        <!-- <div class="flex flex-wrap gap-2 justify-center mb-6">
-                            <button class="genre-tag px-3 py-2 bg-gray-200 text-gray-700 rounded-full text-sm font-medium hover:bg-teal-200 hover:text-teal-800 transition-all duration-200" data-genre="horror">Horror</button>
-                            <button class="genre-tag px-3 py-2 bg-gray-200 text-gray-700 rounded-full text-sm font-medium hover:bg-teal-200 hover:text-teal-800 transition-all duration-200" data-genre="romance">Romance</button>
-                            <button class="genre-tag px-3 py-2 bg-gray-200 text-gray-700 rounded-full text-sm font-medium hover:bg-teal-200 hover:text-teal-800 transition-all duration-200" data-genre="comedy">Comedy</button>
-                            <button class="genre-tag px-3 py-2 bg-gray-200 text-gray-700 rounded-full text-sm font-medium hover:bg-teal-200 hover:text-teal-800 transition-all duration-200" data-genre="fiction">Fiction</button>
-                            <button class="genre-tag px-3 py-2 bg-gray-200 text-gray-700 rounded-full text-sm font-medium hover:bg-teal-200 hover:text-teal-800 transition-all duration-200" data-genre="non-fiction">Non-fiction</button>
-                            <button class="genre-tag px-3 py-2 bg-gray-200 text-gray-700 rounded-full text-sm font-medium hover:bg-teal-200 hover:text-teal-800 transition-all duration-200" data-genre="science">Science</button>
-                        </div> -->
-                        
-                        <div id="preferences-success" class="hidden text-green-600 font-semibold">
-                            ✅ Preferences saved!
-                        </div>
-                           <input type="text" id="authorInput" placeholder="Enter your favorite author (optional)" class="mt-6 w-full border p-3 rounded-lg" />
-                    </div>
-                </div>
-
-                <!-- Step 3: Find Matching Books -->
-                <div id="step-3" class="bg-white rounded-2xl shadow-xl p-8 border border-gray-100 hover:shadow-2xl transition-all duration-300 opacity-50">
-                    <div class="text-center">
-                        <div class="bg-gradient-to-r from-purple-100 to-pink-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
-                            <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C20.832 18.477 19.246 18 17.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-                            </svg>
-                        </div>
-                        
-                        <div class="bg-purple-100 text-purple-800 text-sm font-semibold px-3 py-1 rounded-full inline-block mb-4">Step 3</div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-4">Find Matching Books</h3>
-                        <p class="text-gray-600 mb-6">Discover books that match your preferences using our AI recommendation engine</p>
-                        
-                        <button id="find-books-btn" class="w-full bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
-                            Find My Books
-                        </button>
-                        
-                        <!-- Loading State -->
-                        <div id="loading-state" class="hidden mt-4">
-                            <div class="flex items-center justify-center space-x-2">
-                                <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-purple-600"></div>
-                                <span class="text-purple-600 font-medium">Analyzing your choices with AI...</span>
-                            </div>
-                        </div>
-                        
-                        <div id="books-success" class="hidden text-green-600 font-semibold mt-4">
-                            ✅ Books found successfully!
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Recommended Books Section (Hidden by default) -->
-            <div id="recommended-books" class="hidden mt-16">
-                <h2 class="text-3xl font-bold text-gray-900 text-center mb-8">Recommended Books</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                    <!-- Book Card 1 -->
-                    
-                    
-                    <!-- Book Card 2 -->
-                    
-                    
-                    <!-- Book Card 3 -->
-                    
-                    
-                    <!-- Book Card 4 -->
-                    
-                </div>
+            <div id="photoPreview" class="hidden mt-4">
+                <img id="previewImg" src="" alt="Preview" class="max-w-xs rounded-lg shadow-md">
             </div>
         </div>
 
-        <!-- Warning Toast -->
-        <div id="warning-toast" class="fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300 z-50">
-            <p id="warning-message"></p>
+        <!-- Step 2: Reading Preferences -->
+        <div class="bg-white rounded-lg shadow-md p-8 mb-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Step 2: Choose Your Reading Preferences</h2>
+            <p class="text-gray-600 mb-6">Select all that apply:</p>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <!-- Checkboxes for genres -->
+                <label class="flex items-center space-x-2 cursor-pointer p-3 rounded hover:bg-purple-50 transition">
+                    <input type="checkbox" class="genre-checkbox" value="History">
+                    <span class="text-gray-700">History</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer p-3 rounded hover:bg-purple-50 transition">
+                    <input type="checkbox" class="genre-checkbox" value="Design">
+                    <span class="text-gray-700">Design</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer p-3 rounded hover:bg-purple-50 transition">
+                    <input type="checkbox" class="genre-checkbox" value="Fiction">
+                    <span class="text-gray-700">Fiction</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer p-3 rounded hover:bg-purple-50 transition">
+                    <input type="checkbox" class="genre-checkbox" value="Non-fiction">
+                    <span class="text-gray-700">Non-fiction</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer p-3 rounded hover:bg-purple-50 transition">
+                    <input type="checkbox" class="genre-checkbox" value="Business">
+                    <span class="text-gray-700">Business</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer p-3 rounded hover:bg-purple-50 transition">
+                    <input type="checkbox" class="genre-checkbox" value="Science">
+                    <span class="text-gray-700">Science</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer p-3 rounded hover:bg-purple-50 transition">
+                    <input type="checkbox" class="genre-checkbox" value="Mystery">
+                    <span class="text-gray-700">Mystery</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer p-3 rounded hover:bg-purple-50 transition">
+                    <input type="checkbox" class="genre-checkbox" value="Biography">
+                    <span class="text-gray-700">Biography</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer p-3 rounded hover:bg-purple-50 transition">
+                    <input type="checkbox" class="genre-checkbox" value="Thriller">
+                    <span class="text-gray-700">Thriller</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer p-3 rounded hover:bg-purple-50 transition">
+                    <input type="checkbox" class="genre-checkbox" value="Poetry">
+                    <span class="text-gray-700">Poetry</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer p-3 rounded hover:bg-purple-50 transition">
+                    <input type="checkbox" class="genre-checkbox" value="Classic">
+                    <span class="text-gray-700">Classic</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer p-3 rounded hover:bg-purple-50 transition">
+                    <input type="checkbox" class="genre-checkbox" value="Adult">
+                    <span class="text-gray-700">Adult</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer p-3 rounded hover:bg-purple-50 transition">
+                    <input type="checkbox" class="genre-checkbox" value="Horror">
+                    <span class="text-gray-700">Horror</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer p-3 rounded hover:bg-purple-50 transition">
+                    <input type="checkbox" class="genre-checkbox" value="Comics">
+                    <span class="text-gray-700">Comics</span>
+                </label>
+            </div>
         </div>
 
-        <!-- Features Section -->
-        <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="text-center">
-                <div class="mx-auto w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
-                    <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
-                    </svg>
+        <!-- Step 3: Author (Optional) -->
+        <div class="bg-white rounded-lg shadow-md p-8 mb-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Step 3: Author Name (Optional)</h2>
+            <input type="text" id="authorName" placeholder="Enter author name" 
+                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+        </div>
+
+        <!-- Step 4: Get Recommendation Button -->
+        <div class="text-center mb-6">
+            <button id="getRecommendationBtn" class="bg-purple-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-purple-700 transform hover:scale-105 transition duration-300 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed">
+                👩🏻‍🏫 Get Recommendations
+            </button>
+        </div>
+
+        <!-- Results Section -->
+        <div id="resultsSection" class="hidden">
+            <div class="bg-white rounded-lg shadow-md p-8 mb-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">📚 Recommended Books</h2>
+                <div id="recommendations" class="space-y-4">
+                    <!-- Recommendations will be inserted here by JavaScript -->
                 </div>
-                <h3 class="text-lg font-semibold text-gray-900 mb-2">AI Recognition</h3>
-                <p class="text-gray-600">Advanced AI technology to identify books from cover images</p>
             </div>
             <div class="text-center">
-                <div class="mx-auto w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center mb-4">
-                    <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-                    </svg>
-                </div>
-                <h3 class="text-lg font-semibold text-gray-900 mb-2">Smart Recommendations</h3>
-                <p class="text-gray-600">Get personalized book suggestions based on your scan</p>
-            </div>
-            <div class="text-center">
-                <div class="mx-auto w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
-                    <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
-                    </svg>
-                </div>
-                <h3 class="text-lg font-semibold text-gray-900 mb-2">Quick Save</h3>
-                <p class="text-gray-600">Instantly add identified books to your personal library</p>
+                <a href="save.html" class="inline-block bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transform hover:scale-105 transition duration-300">
+                    View Saved Books →
+                </a>
             </div>
         </div>
-    </main>
 
-    <!-- JavaScript for sidebar, mobile menu and upload functionality -->
+    </div>
+
     <script>
-        // Sidebar functionality
-        const openSidebarBtn = document.getElementById('open-sidebar');
-        const closeSidebarBtn = document.getElementById('close-sidebar');
-        const sidebar = document.getElementById('sidebar');
-        const sidebarOverlay = document.getElementById('sidebar-overlay');
+        // Sidebar open/close handlers
+        (function() {
+            const openBtn = document.getElementById('openSidebar');
+            const closeBtn = document.getElementById('closeSidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const panel = document.getElementById('sidebarPanel');
 
-        // Open sidebar
-        openSidebarBtn.addEventListener('click', function() {
-            sidebar.classList.remove('-translate-x-full');
-            sidebarOverlay.classList.remove('hidden');
-            document.body.style.overflow = 'hidden'; // Prevent background scrolling
-        });
+            function open() {
+                panel.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+            function close() {
+                panel.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+            openBtn && openBtn.addEventListener('click', open);
+            closeBtn && closeBtn.addEventListener('click', close);
+            overlay && overlay.addEventListener('click', close);
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+        })();
 
-        // Close sidebar
-        function closeSidebar() {
-            sidebar.classList.add('-translate-x-full');
-            sidebarOverlay.classList.add('hidden');
-            document.body.style.overflow = ''; // Restore scrolling
-        }
+        // Get references to DOM elements
+        const bookPhotoInput = document.getElementById('bookPhoto');
+        const photoPreview = document.getElementById('photoPreview');
+        const previewImg = document.getElementById('previewImg');
+        const getRecommendationBtn = document.getElementById('getRecommendationBtn');
+        const resultsSection = document.getElementById('resultsSection');
+        const recommendationsDiv = document.getElementById('recommendations');
 
-        closeSidebarBtn.addEventListener('click', closeSidebar);
-        sidebarOverlay.addEventListener('click', closeSidebar);
+        // API Base URL - FastAPI backend
+        const API_BASE_URL = 'http://localhost:8000';
 
-        // Close sidebar on Escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeSidebar();
+        // Handle photo upload and preview
+        bookPhotoInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImg.src = e.target.result;
+                    photoPreview.classList.remove('hidden');
+                };
+                reader.readAsDataURL(file);
             }
         });
 
-        // Mobile menu functionality
-        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenu.classList.toggle('hidden');
-        });
-
-        // Three-step process functionality
-        let photoUploaded = false;
-        let preferencesSet = false;
-        let selectedGenres = [];
-        
-        // Elements
-        const uploadArea = document.getElementById('upload-area');
-        const bookUpload = document.getElementById('book-upload');
-        const uploadSuccess = document.getElementById('upload-success');
-        const preferencesSuccess = document.getElementById('preferences-success');
-        const booksSuccess = document.getElementById('books-success');
-        const findBooksBtn = document.getElementById('find-books-btn');
-        const loadingState = document.getElementById('loading-state');
-        const recommendedBooks = document.getElementById('recommended-books');
-        const warningToast = document.getElementById('warning-toast');
-        const warningMessage = document.getElementById('warning-message');
-        const genreTags = document.querySelectorAll('.genre-tag');
-        
-        // Progress elements
-        const progress1 = document.getElementById('progress-1');
-        const progress2 = document.getElementById('progress-2');
-        const progress3 = document.getElementById('progress-3');
-        const progressLine1 = document.getElementById('progress-line-1');
-        const progressLine2 = document.getElementById('progress-line-2');
-        const step1 = document.getElementById('step-1');
-        const step2 = document.getElementById('step-2');
-        const step3 = document.getElementById('step-3');
-
-        // Warning toast function
-        function showWarning(message) {
-            warningMessage.textContent = message;
-            warningToast.classList.remove('translate-x-full');
-            warningToast.classList.add('translate-x-0');
-            
-            setTimeout(() => {
-                warningToast.classList.remove('translate-x-0');
-                warningToast.classList.add('translate-x-full');
-            }, 3000);
-        }
-
-        // Update progress bar
-        function updateProgress(step) {
-            // Reset all
-            [progress1, progress2, progress3].forEach(p => {
-                p.className = 'flex items-center justify-center w-10 h-10 rounded-full bg-gray-300 text-gray-500 font-bold transition-all duration-300';
-            });
-            
-            [progressLine1, progressLine2].forEach(line => {
-                line.className = 'w-16 h-1 bg-gray-300 rounded transition-all duration-500';
-            });
-
-            // Update based on current step
-            if (step >= 1) {
-                progress1.className = 'flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-bold shadow-lg transition-all duration-300';
-            }
-            if (step >= 2) {
-                progressLine1.className = 'w-16 h-1 bg-gradient-to-r from-indigo-400 to-teal-400 rounded transition-all duration-500';
-                progress2.className = 'flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-r from-teal-500 to-emerald-600 text-white font-bold shadow-lg transition-all duration-300';
-            }
-            if (step >= 3) {
-                progressLine2.className = 'w-16 h-1 bg-gradient-to-r from-teal-400 to-purple-400 rounded transition-all duration-500';
-                progress3.className = 'flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-r from-purple-500 to-pink-600 text-white font-bold shadow-lg transition-all duration-300';
-            }
-        }
-
-        // Enable/disable steps
-        function updateStepStates() {
-            // Step 2 state
-            if (photoUploaded) {
-                step2.classList.remove('opacity-50');
-                step2.classList.add('opacity-100');
-            } else {
-                step2.classList.add('opacity-50');
-                step2.classList.remove('opacity-100');
-            }
-
-            // Step 3 state
-            if (photoUploaded && preferencesSet) {
-                step3.classList.remove('opacity-50');
-                step3.classList.add('opacity-100');
-                findBooksBtn.disabled = false;
-            } else {
-                step3.classList.add('opacity-50');
-                step3.classList.remove('opacity-100');
-                findBooksBtn.disabled = true;
-            }
-        }
-
-        // Step 1: File upload
-        uploadArea.addEventListener('click', function() {
-            bookUpload.click();
-        });
-
-        bookUpload.addEventListener('change', function(e) {
-            if (e.target.files.length > 0) {
-                // Simulate upload process
-                uploadArea.classList.add('opacity-50');
-                
-                setTimeout(() => {
-                    photoUploaded = true;
-                    uploadSuccess.classList.remove('hidden');
-                    uploadArea.classList.remove('opacity-50');
-                    uploadArea.classList.add('border-green-400', 'bg-green-50');
-                    
-                    updateProgress(2);
-                    updateStepStates();
-                }, 1500);
-            }
-        });
-
-        // Drag and drop functionality
-        uploadArea.addEventListener('dragover', function(e) {
-            e.preventDefault();
-            if (!photoUploaded) {
-                uploadArea.classList.add('border-indigo-400', 'bg-indigo-50');
-            }
-        });
-
-        uploadArea.addEventListener('dragleave', function(e) {
-            e.preventDefault();
-            if (!photoUploaded) {
-                uploadArea.classList.remove('border-indigo-400', 'bg-indigo-50');
-            }
-        });
-
-        uploadArea.addEventListener('drop', function(e) {
-            e.preventDefault();
-            if (!photoUploaded) {
-                uploadArea.classList.remove('border-indigo-400', 'bg-indigo-50');
-                
-                const files = e.dataTransfer.files;
-                if (files.length > 0 && files[0].type.startsWith('image/')) {
-                    uploadArea.classList.add('opacity-50');
-                    
-                    setTimeout(() => {
-                        photoUploaded = true;
-                        uploadSuccess.classList.remove('hidden');
-                        uploadArea.classList.remove('opacity-50');
-                        uploadArea.classList.add('border-green-400', 'bg-green-50');
-                        
-                        updateProgress(2);
-                        updateStepStates();
-                    }, 1500);
-                }
-            }
-        });
-
-        // Step 2: Genre selection
-        genreTags.forEach(tag => {
-            tag.addEventListener('click', function() {
-                if (!photoUploaded) {
-                    showWarning('Please upload a book photo first.');
-                    return;
-                }
-
-                const genre = this.dataset.genre;
-                
-                if (selectedGenres.includes(genre)) {
-                    // Remove genre
-                    selectedGenres = selectedGenres.filter(g => g !== genre);
-                    this.classList.remove('bg-teal-500', 'text-white');
-                    this.classList.add('bg-gray-200', 'text-gray-700');
-                } else {
-                    // Add genre
-                    selectedGenres.push(genre);
-                    this.classList.add('bg-teal-500', 'text-white');
-                    this.classList.remove('bg-gray-200', 'text-gray-700');
-                }
-
-                // Check if at least one genre is selected
-                if (selectedGenres.length > 0 && !preferencesSet) {
-                    preferencesSet = true;
-                    preferencesSuccess.classList.remove('hidden');
-                    updateProgress(3);
-                    updateStepStates();
-                }
-            });
-        });
-
-        // Step 3: Find books
-        findBooksBtn.addEventListener('click', function() {
-            if (!photoUploaded || !preferencesSet) {
-                showWarning('Please complete all steps before finding your match.');
-                return;
-            }
-
+        // Handle Get Recommendation button click - Now calls FastAPI
+        getRecommendationBtn.addEventListener('click', async function() {
             // Show loading state
-            loadingState.classList.remove('hidden');
-            this.disabled = true;
-            
-            setTimeout(() => {
-                loadingState.classList.add('hidden');
-                booksSuccess.classList.remove('hidden');
-                recommendedBooks.classList.remove('hidden');
+            getRecommendationBtn.disabled = true;
+            getRecommendationBtn.textContent = '⏳ Loading...';
+
+            try {
+                // Get selected genres
+                const selectedGenres = Array.from(document.querySelectorAll('.genre-checkbox:checked'))
+                    .map(cb => cb.value);
+                const authorName = document.getElementById('authorName').value;
+
+                // Call FastAPI backend
+                const response = await fetch(`${API_BASE_URL}/recommendations`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        genres: selectedGenres,
+                        author_name: authorName || null
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to get recommendations');
+                }
+
+                const data = await response.json();
                 
-                // Scroll to recommended books
-                recommendedBooks.scrollIntoView({ behavior: 'smooth' });
-            }, 3000);
+                // Display recommendations from API
+                displayRecommendations(data.recommendations);
+
+                // Reset button state
+                getRecommendationBtn.disabled = false;
+                getRecommendationBtn.textContent = '👩🏻‍🏫 Get Recommendations';
+
+            } catch (error) {
+                console.error('Error fetching recommendations:', error);
+                alert('⚠️ Failed to connect to API. Make sure the FastAPI server is running on http://localhost:8000');
+                
+                // Reset button state
+                getRecommendationBtn.disabled = false;
+                getRecommendationBtn.textContent = '👩🏻‍🏫 Get Recommendations';
+            }
         });
 
-        // Initialize
-        updateStepStates();
+        // Display recommendations on the page
+        function displayRecommendations(books) {
+            // Clear previous recommendations
+            recommendationsDiv.innerHTML = '';
+
+            books.forEach((book, index) => {
+                const bookCard = document.createElement('div');
+                bookCard.className = 'border border-gray-200 rounded-lg p-6 hover:shadow-lg transition';
+                bookCard.innerHTML = `
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">${book.title}</h3>
+                    <p class="text-gray-600 mb-4">${book.description}</p>
+                    <button onclick="saveBook(${index})" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition">
+                        ❤️ Save Book
+                    </button>
+                `;
+                recommendationsDiv.appendChild(bookCard);
+            });
+
+            // Store recommendations in a global variable for save function
+            window.currentRecommendations = books;
+
+            // Show results section
+            resultsSection.classList.remove('hidden');
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Save book to FastAPI backend
+        async function saveBook(index) {
+            const book = window.currentRecommendations[index];
+            
+            try {
+                // Call FastAPI to save the book
+                const response = await fetch(`${API_BASE_URL}/saved-books`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        title: book.title,
+                        description: book.description,
+                        author: null
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to save book');
+                }
+
+                const data = await response.json();
+                
+                // Show success message
+                alert(`✨ "${book.title}" saved successfully!`);
+            } catch (error) {
+                console.error('Error saving book:', error);
+                alert('⚠️ Failed to save book. Make sure the FastAPI server is running.');
+            }
+        }
     </script>
+
 </body>
 </html>

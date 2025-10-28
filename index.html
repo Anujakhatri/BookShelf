@@ -3,475 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BookShelf - Pick your book with AI</title>
+    <title>BookShelf – Your Smart Reading Companion</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#6366f1',
-                        secondary: '#10b981'
-                    }
-                }
-            }
-        }
-    </script> -->
 </head>
-<body class="bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 min-h-screen flex flex-col">
+<body class="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 min-h-screen">
+
     <!-- Navigation Bar -->
-    <nav class="bg-white shadow-lg sticky top-0 z-50">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex items-center">
-                    <h1 class="text-2xl font-bold text-indigo-600">BookShelf</h1>
-                </div>
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="index.html" class="text-indigo-600 bg-indigo-100 px-3 py-2 rounded-md text-sm font-medium">Home</a>
-                        <a href="scan.html" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-200">Scan</a>
-                        <a href="save.html" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-200">Save</a>
-                        <a href="contact.html" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-200">Contact Us</a>
-                    </div>
-                </div>
-                <!-- Mobile menu button -->
-                <div class="md:hidden">
-                    <button type="button" class="text-gray-700 hover:text-indigo-600 focus:outline-none focus:text-indigo-600" id="mobile-menu-btn">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <!-- Hamburger to open sidebar -->
+                    <button id="openSidebar" class="p-2 rounded-md hover:bg-purple-50 focus:outline-none focus:ring-2 focus:ring-purple-500" aria-label="Open menu">
+                        <svg class="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
                     </button>
+                    <span class="text-2xl font-bold text-purple-600">BookShelf</span>
                 </div>
-            </div>
-            <!-- Mobile menu -->
-            <div class="md:hidden hidden" id="mobile-menu">
-                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-gray-50 rounded-lg mt-2">
-                    <a href="index.html" class="text-indigo-600 bg-indigo-100 block px-3 py-2 rounded-md text-base font-medium">Home</a>
-                    <a href="scan.html" class="text-gray-700 hover:text-indigo-600 block px-3 py-2 rounded-md text-base font-medium transition duration-200">Scan</a>
-                    <a href="save.html" class="text-gray-700 hover:text-indigo-600 block px-3 py-2 rounded-md text-base font-medium transition duration-200">Save</a>
-                    <a href="contact.html" class="text-gray-700 hover:text-indigo-600 block px-3 py-2 rounded-md text-base font-medium transition duration-200">Contact Us</a>
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="index.html" class="text-purple-600 font-semibold hover:text-purple-800 transition">Home</a>
+                    <a href="scan.html" class="text-gray-600 hover:text-purple-600 transition">Scan</a>
+                    <a href="save.html" class="text-gray-600 hover:text-purple-600 transition">Saved</a>
+                    <a href="contact.html" class="text-gray-600 hover:text-purple-600 transition">Contact</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <!-- Hero Section -->
-        <div class="text-center mb-16">
-            <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-                Pick your book with AI
-            </h1>
-            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                Discover your next favorite read with our AI-powered book recommendation system
-            </p>
+    <!-- Sidebar overlay and panel -->
+    <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-50 hidden"></div>
+    <aside id="sidebarPanel" class="fixed left-0 top-0 h-full w-80 bg-white shadow-2xl z-50 -translate-x-full transition-transform duration-300">
+        <div class="p-6 h-full flex flex-col">
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center space-x-2">
+                    <span class="text-2xl">📚</span>
+                    <span class="text-xl font-bold text-purple-600">BookShelf</span>
+                </div>
+                <button id="closeSidebar" class="p-2 rounded-md hover:bg-gray-100" aria-label="Close menu">
+                    <svg class="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="space-y-4 mb-6">
+                <h3 class="text-lg font-semibold text-gray-800">About this project</h3>
+                <p class="text-sm text-gray-600 leading-relaxed">
+                    BookShelf helps you upload a book cover, pick your reading preferences, get AI-like recommendations, and save favorites for later. Built with TailwindCSS and vanilla JavaScript.
+                </p>
+            </div>
+            <nav class="space-y-2">
+                <a href="index.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-purple-50">
+                    <span>🏠</span><span class="text-gray-800">Home</span>
+                </a>
+                <a href="scan.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-purple-50">
+                    <span>🔍</span><span class="text-gray-800">Scan</span>
+                </a>
+                <a href="save.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-purple-50">
+                    <span>❤️</span><span class="text-gray-800">Saved</span>
+                </a>
+                <a href="contact.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-purple-50">
+                    <span>✉️</span><span class="text-gray-800">Contact</span>
+                </a>
+            </nav>
+            <div class="mt-auto pt-6 text-xs text-gray-400">v1.0 • Learning demo</div>
         </div>
+    </aside>
 
-        <!-- How It Works Section -->
-        <div class="mb-16 bg-gradient-to-br from-slate-50 via-indigo-50 to-purple-50 rounded-3xl p-8 md:p-12 relative overflow-hidden">
-            <!-- Background decoration -->
-            <div class="absolute inset-0 bg-gradient-to-r from-sky-100/50 to-purple-100/50 rounded-3xl"></div>
-            <div class="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-r from-sky-200/30 to-indigo-200/30 rounded-full blur-3xl -translate-y-48"></div>
-            <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-r from-purple-200/30 to-pink-200/30 rounded-full blur-3xl translate-y-48"></div>
-            
-            <div class="relative z-10">
-                <!-- Header -->
-                <div class="text-center mb-12">
-                    <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">How It Works</h2>
-                    <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                        Discover your next favorite read in three simple steps
-                    </p>
-                </div>
+    <!-- Hero Section -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 animate-fade-in">
+        <div class="text-center">
+            <h1 class="text-5xl md:text-6xl font-bold text-gray-800 mb-6 animate-slide-up">
+                BookShelf 📚
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-600 mb-8 animate-slide-up-delay">
+                Your Smart Reading Companion
+            </p>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed">
+                Discover your next favorite book! Upload a book cover, choose your preferences, 
+                get personalized recommendations powered by AI, and save books to read later. 
+                Your perfect reading journey starts here! ✨
+            </p>
+            <a href="scan.html" class="inline-block bg-purple-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-purple-700 transform hover:scale-105 transition duration-300 shadow-lg">
+                Get Started →
+            </a>
+        </div>
+    </section>
 
-                <!-- Progress Bar -->
-                <div class="flex items-center justify-center mb-12">
-                    <div class="flex items-center space-x-4">
-                        <div id="progress-1" class="w-10 h-10 rounded-full bg-gradient-to-r from-sky-400 to-indigo-600 text-white font-bold flex items-center justify-center shadow-lg transition-all duration-300">1</div>
-                        <div id="progress-line-1" class="w-16 h-1 bg-gray-300 rounded transition-all duration-500"></div>
-                        <div id="progress-2" class="w-10 h-10 rounded-full bg-gray-300 text-gray-500 font-bold flex items-center justify-center transition-all duration-300">2</div>
-                        <div id="progress-line-2" class="w-16 h-1 bg-gray-300 rounded transition-all duration-500"></div>
-                        <div id="progress-3" class="w-10 h-10 rounded-full bg-gray-300 text-gray-500 font-bold flex items-center justify-center transition-all duration-300">3</div>
-                    </div>
-                </div>
-                
-                <div class="grid md:grid-cols-3 gap-8">
-                    <!-- Step 1: Upload Book Photo -->
-                    <div id="step-1" class="text-center p-6 bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 border border-white/50">
-                        <div class="bg-gradient-to-r from-sky-400 via-indigo-400 to-indigo-600 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
-                            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                            </svg>
-                        </div>
-                        <div class="bg-sky-100 text-sky-800 text-sm font-semibold px-3 py-1 rounded-full inline-block mb-4">Step 1</div>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Upload a Book Photo</h3>
-                        <p class="text-gray-600 mb-6 leading-relaxed">Provide a picture of a bookcase or stack of books from your bookstore, college, or library.  Every book is instantaneously recognized by our AI after scanning it.</p>
-                        
-                        <input type="file" id="book-upload" accept="image/*" class="hidden">
-                        <button id="upload-btn" class="w-full bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-600 hover:to-indigo-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105">
-                            📷 Upload Book Photo
-                        </button>
-                        
-                        <div id="upload-success" class="hidden mt-4 text-green-600 font-semibold">
-                            ✅ Photo uploaded successfully!
-                        </div>
-                    </div>
-                    
-                    <!-- Step 2: Set Preferences -->
-                    <div id="step-2" class="text-center p-6 bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 border border-white/50 opacity-60">
-                        <div class="bg-gradient-to-r from-teal-400 via-green-400 to-emerald-600 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
-                            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"></path>
-                            </svg>
-                        </div>
-                        <div class="bg-teal-100 text-teal-800 text-sm font-semibold px-3 py-1 rounded-full inline-block mb-4">Step 2</div>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Set Your Preferences</h3>
-                        <p class="text-gray-600 mb-6 leading-relaxed">Select your favorite genres to get personalized recommendations.</p>
-                        
-                        <div id="genre-tags" class="flex flex-wrap gap-2 justify-center mb-6">
-                            <button class="genre-tag px-4 py-2 bg-gray-200 text-gray-700 rounded-full text-sm font-medium hover:bg-teal-200 hover:text-teal-800 transition-all duration-200" data-genre="romance">Romance</button>
-                            <button class="genre-tag px-4 py-2 bg-gray-200 text-gray-700 rounded-full text-sm font-medium hover:bg-teal-200 hover:text-teal-800 transition-all duration-200" data-genre="horror">Horror</button>
-                            <button class="genre-tag px-4 py-2 bg-gray-200 text-gray-700 rounded-full text-sm font-medium hover:bg-teal-200 hover:text-teal-800 transition-all duration-200" data-genre="fiction">Fiction</button>
-                            <button class="genre-tag px-4 py-2 bg-gray-200 text-gray-700 rounded-full text-sm font-medium hover:bg-teal-200 hover:text-teal-800 transition-all duration-200" data-genre="science">Science</button>
-                            <button class="genre-tag px-4 py-2 bg-gray-200 text-gray-700 rounded-full text-sm font-medium hover:bg-teal-200 hover:text-teal-800 transition-all duration-200" data-genre="mystery">Mystery</button>
-                            <button class="genre-tag px-4 py-2 bg-gray-200 text-gray-700 rounded-full text-sm font-medium hover:bg-teal-200 hover:text-teal-800 transition-all duration-200" data-genre="non-fiction">Non-Fiction</button>
-                            <button class="genre-tag px-4 py-2 bg-gray-200 text-gray-700 rounded-full text-sm font-medium hover:bg-teal-200 hover:text-teal-800 transition-all duration-200" data-genre="mystery">History</button>
-                            <button class="genre-tag px-4 py-2 bg-gray-200 text-gray-700 rounded-full text-sm font-medium hover:bg-teal-200 hover:text-teal-800 transition-all duration-200" data-genre="mystery">Mystery</button>
-                            <button class="genre-tag px-4 py-2 bg-gray-200 text-gray-700 rounded-full text-sm font-medium hover:bg-teal-200 hover:text-teal-800 transition-all duration-200" data-genre="mystery">Horror</button>
-                            <button class="genre-tag px-4 py-2 bg-gray-200 text-gray-700 rounded-full text-sm font-medium hover:bg-teal-200 hover:text-teal-800 transition-all duration-200" data-genre="mystery">Thriller</button>
-                        </div>
-                        
-                        <div id="preferences-success" class="hidden mt-4 text-green-600 font-semibold">
-                            ✅ Preferences saved!
-                        </div>
-                    </div>
-                    
-                    <!-- Step 3: Find Matching Books -->
-                    <div id="step-3" class="text-center p-6 bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 border border-white/50 opacity-60">
-                        <div class="bg-gradient-to-r from-purple-400 via-violet-500 to-fuchsia-600 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
-                            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C20.832 18.477 19.246 18 17.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-                            </svg>
-                        </div>
-                        <div class="bg-purple-100 text-purple-800 text-sm font-semibold px-3 py-1 rounded-full inline-block mb-4">Step 3</div>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-4">Find Matching Books</h3>
-                        <p class="text-gray-600 mb-6 leading-relaxed">Discover books that perfectly match your reading taste with our AI-powered recommendation engine.</p>
-                        
-                        <button id="find-books-btn" class="w-full bg-gradient-to-r from-purple-500 to-fuchsia-600 hover:from-purple-600 hover:to-fuchsia-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
-                            📚 Find My Books
-                        </button>
-                        
-                        <div id="books-success" class="hidden mt-4 text-green-600 font-semibold">
-                            ✅ Books matched successfully! Start using BookShelf today.
-                        </div>
-                    </div>
-                </div>
+    <!-- Features Section -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">How It Works</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Feature 1 -->
+            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300 transform hover:-translate-y-2">
+                <div class="text-4xl mb-4">📷</div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">1. Upload a Book</h3>
+                <p class="text-gray-600">Take or upload a photo of your book cover</p>
+            </div>
+            <!-- Feature 2 -->
+            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300 transform hover:-translate-y-2">
+                <div class="text-4xl mb-4">👩🏻‍💻</div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">2. Choose Preferences</h3>
+                <p class="text-gray-600">Select genres and topics you love</p>
+            </div>
+            <!-- Feature 3 -->
+            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300 transform hover:-translate-y-2">
+                <div class="text-4xl mb-4">👩🏻‍🏫</div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">3. Get Recommendations</h3>
+                <p class="text-gray-600">Receive AI-powered book suggestions</p>
             </div>
         </div>
-
-        <!-- Toast Notification -->
-        <div id="toast" class="fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300 z-50">
-            <p id="toast-message"></p>
-        </div>
+    </section>
 
     <!-- Footer -->
-    <footer class="bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 min-h-screen flex flex-col">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-            <div class="text-center">
-                <!-- Animated Icon -->
-                <div class="mb-8">
-                    <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-indigo-100 to-purple-100 rounded-full shadow-lg animate-pulse">
-                        <svg class="w-10 h-10 text-indigo-600 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
-                        </svg>
-                    </div>
-                </div>
-                
-                <!-- Main Heading -->
-                <div class="mb-6 opacity-0 animate-fade-in" style="animation-delay: 0.2s;">
-                    <h2 class="text-2xl md:text-3xl font-semibold text-gray-900">
-                        Get Started with BookShelf Now
-                    </h2>
-                </div>
-                
-                <!-- Supporting Text -->
-                <div class="mb-10 opacity-0 animate-fade-up" style="animation-delay: 0.4s;">
-                    <p class="text-gray-600 text-sm md:text-base max-w-xl mx-auto leading-relaxed">
-                        AI-Powered Book Discovery
-                    </p>
-                </div>
-                
-                <!-- Get Started Button -->
-                <div class="mb-8 opacity-0 animate-fade-up" style="animation-delay: 0.6s;">
-                    <button onclick="smoothScrollToScan()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 px-8 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-indigo-300">
-                        Get Started
-                    </button>
-                </div>
-                
+    <footer class="bg-gray-800 text-white py-8 mt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col items-center">
                 <!-- Social Media Links -->
-                <div class="opacity-0 animate-fade-up" style="animation-delay: 0.8s;">
-                    <div class="flex justify-center space-x-6">
-                        <!-- Twitter -->
-                        <a href="https://twitter.com/bookshelfai" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-indigo-600 transition-all duration-200 transform hover:scale-110" title="Follow us on Twitter">
-                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
-                            </svg>
-                        </a>
-                        <!-- Facebook -->
-                        <a href="https://facebook.com/bookshelfai" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-indigo-600 transition-all duration-200 transform hover:scale-110" title="Like us on Facebook">
-                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                            </svg>
-                        </a>
-                        <!-- Instagram -->
-                        <a href="https://instagram.com/bookshelfai" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-indigo-600 transition-all duration-200 transform hover:scale-110" title="Follow us on Instagram">
-                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                            </svg>
-                        </a>
-                        <!-- LinkedIn -->
-                        <a href="https://linkedin.com/company/bookshelfai" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-indigo-600 transition-all duration-200 transform hover:scale-110" title="Connect with us on LinkedIn">
-                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                            </svg>
-                        </a>
-                        <!-- GitHub -->
-                        <a href="https://github.com/bookshelfai" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-indigo-600 transition-all duration-200 transform hover:scale-110" title="View our code on GitHub">
-                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                            </svg>
-                        </a>
-                    </div>
+                <div class="flex space-x-6 mb-6">
+                    <a href="https://twitter.com" target="_blank" class="text-gray-300 hover:text-blue-400 transition duration-300 transform hover:scale-110">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path>
+                        </svg>
+                    </a>
+                    <a href="https://github.com" target="_blank" class="text-gray-300 hover:text-white transition duration-300 transform hover:scale-110">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path>
+                        </svg>
+                    </a>
+                    <a href="https://linkedin.com" target="_blank" class="text-gray-300 hover:text-blue-600 transition duration-300 transform hover:scale-110">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path>
+                        </svg>
+                    </a>
                 </div>
+                <!-- Copyright -->
+                <p class="text-gray-300">© 2025 BookShelf. Built with love for readers everywhere.</p>
             </div>
         </div>
     </footer>
 
-    <!-- JavaScript for mobile menu -->
-    <script>
-        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenu.classList.toggle('hidden');
-        });
-    </script>
-
-    <!-- JavaScript for How It Works Interactive Section -->
-    <script>
-        // State management
-        let currentStep = 1;
-        let photoUploaded = false;
-        let preferencesSet = false;
-        let selectedGenres = [];
-
-        // Elements
-        const uploadBtn = document.getElementById('upload-btn');
-        const bookUpload = document.getElementById('book-upload');
-        const uploadSuccess = document.getElementById('upload-success');
-        const preferencesSuccess = document.getElementById('preferences-success');
-        const booksSuccess = document.getElementById('books-success');
-        const findBooksBtn = document.getElementById('find-books-btn');
-        const toast = document.getElementById('toast');
-        const toastMessage = document.getElementById('toast-message');
-        const genreTags = document.querySelectorAll('.genre-tag');
-
-        // Progress elements
-        const progress1 = document.getElementById('progress-1');
-        const progress2 = document.getElementById('progress-2');
-        const progress3 = document.getElementById('progress-3');
-        const progressLine1 = document.getElementById('progress-line-1');
-        const progressLine2 = document.getElementById('progress-line-2');
-        const step1 = document.getElementById('step-1');
-        const step2 = document.getElementById('step-2');
-        const step3 = document.getElementById('step-3');
-
-        // Toast notification function
-        function showToast(message) {
-            toastMessage.textContent = message;
-            toast.classList.remove('translate-x-full');
-            toast.classList.add('translate-x-0');
-            
-            setTimeout(() => {
-                toast.classList.remove('translate-x-0');
-                toast.classList.add('translate-x-full');
-            }, 3000);
-        }
-
-        // Update progress bar
-        function updateProgress(step) {
-            // Reset all
-            [progress1, progress2, progress3].forEach(p => {
-                p.className = 'w-10 h-10 rounded-full bg-gray-300 text-gray-500 font-bold flex items-center justify-center transition-all duration-300';
-            });
-            
-            [progressLine1, progressLine2].forEach(line => {
-                line.className = 'w-16 h-1 bg-gray-300 rounded transition-all duration-500';
-            });
-
-            // Update based on current step
-            if (step >= 1) {
-                progress1.className = 'w-10 h-10 rounded-full bg-gradient-to-r from-sky-400 to-indigo-600 text-white font-bold flex items-center justify-center shadow-lg transition-all duration-300';
-            }
-            if (step >= 2) {
-                progressLine1.className = 'w-16 h-1 bg-gradient-to-r from-sky-400 to-teal-400 rounded transition-all duration-500';
-                progress2.className = 'w-10 h-10 rounded-full bg-gradient-to-r from-teal-400 to-emerald-600 text-white font-bold flex items-center justify-center shadow-lg transition-all duration-300';
-            }
-            if (step >= 3) {
-                progressLine2.className = 'w-16 h-1 bg-gradient-to-r from-teal-400 to-purple-400 rounded transition-all duration-500';
-                progress3.className = 'w-10 h-10 rounded-full bg-gradient-to-r from-purple-400 to-fuchsia-600 text-white font-bold flex items-center justify-center shadow-lg transition-all duration-300';
-            }
-        }
-
-        // Enable/disable steps
-        function updateStepStates() {
-            // Step 2 state
-            if (photoUploaded) {
-                step2.classList.remove('opacity-60');
-                step2.classList.add('opacity-100');
-            } else {
-                step2.classList.add('opacity-60');
-                step2.classList.remove('opacity-100');
-            }
-
-            // Step 3 state
-            if (photoUploaded && preferencesSet) {
-                step3.classList.remove('opacity-60');
-                step3.classList.add('opacity-100');
-                findBooksBtn.disabled = false;
-            } else {
-                step3.classList.add('opacity-60');
-                step3.classList.remove('opacity-100');
-                findBooksBtn.disabled = true;
-            }
-        }
-
-        // Step 1: File upload
-        uploadBtn.addEventListener('click', function() {
-            bookUpload.click();
-        });
-
-        bookUpload.addEventListener('change', function(e) {
-            if (e.target.files.length > 0) {
-                // Simulate upload process
-                uploadBtn.innerHTML = '⏳ Uploading...';
-                uploadBtn.disabled = true;
-                
-                setTimeout(() => {
-                    photoUploaded = true;
-                    currentStep = 2;
-                    uploadSuccess.classList.remove('hidden');
-                    uploadBtn.innerHTML = '✅ Photo Uploaded';
-                    uploadBtn.classList.add('bg-green-500', 'hover:bg-green-600');
-                    uploadBtn.classList.remove('bg-gradient-to-r', 'from-sky-500', 'to-indigo-600', 'hover:from-sky-600', 'hover:to-indigo-700');
-                    
-                    updateProgress(2);
-                    updateStepStates();
-                }, 1500);
-            }
-        });
-
-        // Step 2: Genre selection
-        genreTags.forEach(tag => {
-            tag.addEventListener('click', function() {
-                if (!photoUploaded) {
-                    showToast('Please upload a book photo first.');
-                    return;
-                }
-
-                const genre = this.dataset.genre;
-                
-                if (selectedGenres.includes(genre)) {
-                    // Remove genre
-                    selectedGenres = selectedGenres.filter(g => g !== genre);
-                    this.classList.remove('bg-teal-500', 'text-white');
-                    this.classList.add('bg-gray-200', 'text-gray-700');
-                } else {
-                    // Add genre
-                    selectedGenres.push(genre);
-                    this.classList.add('bg-teal-500', 'text-white');
-                    this.classList.remove('bg-gray-200', 'text-gray-700');
-                }
-
-                // Check if at least one genre is selected
-                if (selectedGenres.length > 0 && !preferencesSet) {
-                    preferencesSet = true;
-                    currentStep = 3;
-                    preferencesSuccess.classList.remove('hidden');
-                    updateProgress(3);
-                    updateStepStates();
-                }
-            });
-        });
-
-        // Step 3: Find books
-        findBooksBtn.addEventListener('click', function() {
-            if (!photoUploaded || !preferencesSet) {
-                showToast('Please complete all previous steps first.');
-                return;
-            }
-
-            // Simulate book matching process
-            this.innerHTML = '⏳ Finding Books...';
-            this.disabled = true;
-            
-            setTimeout(() => {
-                booksSuccess.classList.remove('hidden');
-                this.innerHTML = '✅ Books Found!';
-                this.classList.add('bg-green-500', 'hover:bg-green-600');
-                this.classList.remove('bg-gradient-to-r', 'from-purple-500', 'to-fuchsia-600', 'hover:from-purple-600', 'hover:to-fuchsia-700');
-                
-                // Add some celebration effect
-                setTimeout(() => {
-                    showToast('🎉 Welcome to BookShelf! Your reading journey begins now.');
-                }, 500);
-            }, 2000);
-        });
-
-        // Initialize
-        updateStepStates();
-        
-        // Smooth scroll to scan section
-        function smoothScrollToScan() {
-            // Check if scan.html exists, otherwise scroll to top
-            window.location.href = 'scan.html';
+    <style>
+        /* Custom animations */
+        @keyframes fade-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         
-        // Add fade-in animations on page load
-        window.addEventListener('load', function() {
-            // Create keyframes for animations
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes fade-in {
-                    from {
-                        opacity: 0;
-                        transform: translateY(10px);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: translateY(0);
-                    }
-                }
-                
-                @keyframes fade-up {
-                    from {
-                        opacity: 0;
-                        transform: translateY(20px);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: translateY(0);
-                    }
-                }
-                
-                .animate-fade-in {
-                    animation: fade-in 0.8s ease-out forwards;
-                }
-                
-                .animate-fade-up {
-                    animation: fade-up 0.8s ease-out forwards;
-                }
-            `;
-            document.head.appendChild(style);
-        });
+        @keyframes slide-up {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fade-in 0.8s ease-in;
+        }
+
+        .animate-slide-up {
+            animation: slide-up 1s ease-out;
+        }
+
+        .animate-slide-up-delay {
+            animation: slide-up 1s ease-out 0.2s backwards;
+        }
+    </style>
+
+    <script>
+        // Sidebar open/close handlers
+        (function() {
+            const openBtn = document.getElementById('openSidebar');
+            const closeBtn = document.getElementById('closeSidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const panel = document.getElementById('sidebarPanel');
+
+            function open() {
+                panel.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+            function close() {
+                panel.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+            openBtn && openBtn.addEventListener('click', open);
+            closeBtn && closeBtn.addEventListener('click', close);
+            overlay && overlay.addEventListener('click', close);
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+        })();
     </script>
+
 </body>
 </html>
