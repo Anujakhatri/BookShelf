@@ -1,5 +1,4 @@
 """
-BookShelf FastAPI Backend
 A machine learning-powered book recommendation system
 """
 from fastapi import FastAPI, File, UploadFile, HTTPException
