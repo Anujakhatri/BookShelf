@@ -46,7 +46,7 @@
                 </div>
                 
                 <!-- Quick Stats -->
-                <div class="border-t pt-6">
+                <!-- <div class="border-t pt-6">
                     <h4 class="font-medium text-gray-900 mb-4">Quick Stats</h4>
                     <div class="grid grid-cols-2 gap-4">
                         <div class="text-center">
@@ -58,7 +58,7 @@
                             <div class="text-xs text-gray-600">Happy Users</div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -112,14 +112,14 @@
     <!-- Main Content -->
     <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <!-- Hero Section -->
-        <!-- <div class="text-center mb-16">
+        <div class="text-center mb-16">
             <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
                 Scan your book with AI
             </h1>
             <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
                 Upload your book cover or scan a book to discover more about it, get recommendations, and add it to your collection.
             </p>
-        </div> -->
+        </div>
 
         <!-- Three-Step Process Section -->
         <div class="max-w-6xl mx-auto">
@@ -170,29 +170,33 @@
                 <!-- Step 2: Set Preferences -->
                 <div id="step-2" class="bg-white rounded-2xl shadow-xl p-8 border border-gray-100 hover:shadow-2xl transition-all duration-300 opacity-50">
                     <div class="text-center">
-                        <div class="bg-gradient-to-r from-teal-100 to-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <!-- <div class="bg-gradient-to-r from-teal-100 to-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
                             <svg class="w-8 h-8 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4"></path>
                             </svg>
-                        </div>
+                        </div> -->
                         
                         <div class="bg-teal-100 text-teal-800 text-sm font-semibold px-3 py-1 rounded-full inline-block mb-4">Step 2</div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-4">Set Your Preferences</h3>
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">Pick Your Reading Taste!</h3>
                         <p class="text-gray-600 mb-6">Choose your favorite genres to get personalized recommendations</p>
-                        
+                        <p id="uploadWarning" class="text-center text-red-500 hidden mb-4">Please upload a book photo first.</p>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 text-center">
+                        <!-- Genre Buttons -->
+                        </div>
                         <!-- Genre Tags -->
-                        <div class="flex flex-wrap gap-2 justify-center mb-6">
+                        <!-- <div class="flex flex-wrap gap-2 justify-center mb-6">
                             <button class="genre-tag px-3 py-2 bg-gray-200 text-gray-700 rounded-full text-sm font-medium hover:bg-teal-200 hover:text-teal-800 transition-all duration-200" data-genre="horror">Horror</button>
                             <button class="genre-tag px-3 py-2 bg-gray-200 text-gray-700 rounded-full text-sm font-medium hover:bg-teal-200 hover:text-teal-800 transition-all duration-200" data-genre="romance">Romance</button>
                             <button class="genre-tag px-3 py-2 bg-gray-200 text-gray-700 rounded-full text-sm font-medium hover:bg-teal-200 hover:text-teal-800 transition-all duration-200" data-genre="comedy">Comedy</button>
                             <button class="genre-tag px-3 py-2 bg-gray-200 text-gray-700 rounded-full text-sm font-medium hover:bg-teal-200 hover:text-teal-800 transition-all duration-200" data-genre="fiction">Fiction</button>
                             <button class="genre-tag px-3 py-2 bg-gray-200 text-gray-700 rounded-full text-sm font-medium hover:bg-teal-200 hover:text-teal-800 transition-all duration-200" data-genre="non-fiction">Non-fiction</button>
                             <button class="genre-tag px-3 py-2 bg-gray-200 text-gray-700 rounded-full text-sm font-medium hover:bg-teal-200 hover:text-teal-800 transition-all duration-200" data-genre="science">Science</button>
-                        </div>
+                        </div> -->
                         
                         <div id="preferences-success" class="hidden text-green-600 font-semibold">
                             ✅ Preferences saved!
                         </div>
+                           <input type="text" id="authorInput" placeholder="Enter your favorite author (optional)" class="mt-6 w-full border p-3 rounded-lg" />
                     </div>
                 </div>
 

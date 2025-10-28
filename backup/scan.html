@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scan Books - Book SelfScanner</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 min-h-screen flex flex-col">
+  <nav class="flex justify-between items-center p-6 bg-white shadow-lg">
+    <h1 class="text-2xl font-bold text-indigo-600">📚 Book SelfScanner</h1>
+    <div class="space-x-6">
+      <a href="index.html" class="hover:text-indigo-600 font-medium">Home</a>
+      <a href="scan.html" class="hover:text-indigo-600 font-medium">Scan</a>
+      <a href="save.html" class="hover:text-indigo-600 font-medium">Save</a>
+    </div>
+  </nav>
+
+  <main class="flex flex-col items-center p-10 space-y-10">
+    <!-- Step 1 -->
+    <div id="step1" class="bg-white p-8 rounded-2xl shadow-lg w-full max-w-2xl text-center">
+      <h2 class="text-2xl font-semibold mb-4 text-gray-800">Step 1: Upload a Book Photo</h2>
+      <input type="file" id="bookPhoto" accept="image/*" class="border p-3 w-full rounded-lg" />
+      <p id="uploadMsg" class="mt-4 text-green-600 hidden">Photo uploaded successfully!</p>
+    </div>
+
+    <!-- Step 2 -->
+    <div id="step2" class="bg-white p-8 rounded-2xl shadow-lg w-full max-w-3xl">
+      <h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">Step 2: Pick Your Reading Taste!</h2>
+      <p id="uploadWarning" class="text-center text-red-500 hidden mb-4">Please upload a book photo first.</p>
+
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 text-center">
+        <!-- Genre Buttons -->
+      </div>
+
+      <input type="text" id="authorInput" placeholder="Enter your favorite author (optional)" class="mt-6 w-full border p-3 rounded-lg" />
+    </div>
+
+    <!-- Step 3 -->
+    <div id="step3" class="bg-white p-8 rounded-2xl shadow-lg w-full max-w-2xl text-center">
+      <h2 class="text-2xl font-semibold mb-4 text-gray-800">Step 3: Find Matching Books</h2>
+      <button id="findBooks" class="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-6 py-3 rounded-full hover:scale-105 transition">Find My Book</button>
+      <p id="loading" class="hidden mt-4 text-gray-600 animate-pulse">Analyzing your choices with AI...</p>
+      <div id="recommendations" class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6"></div>
+    </div>
+  </main>
+
+  <script>
+    const genres = ["History","Design","Fiction","Non-fiction","Business","Science","Mystery","Biography","Thriller","Poetry","Classic","Adult","Horror","Comics"];
+    const genreContainer = document.querySelector("#step2 .grid");
+    const uploadInput = document.getElementById("bookPhoto");
+    const uploadMsg = document.getElementById("uploadMsg");
+    const uploadWarning = document.getElementById("uploadWarning");
+    const findBtn = document.getElementById("findBooks");
+    const loading = document.getElementById("loading");
+    const recContainer = document.getElementById("recommendations");
+
+    let uploaded = false;
+    let selectedGenres = [];
+
+    // Generate genre buttons
+    genres.forEach(g => {
+      const btn = document.createElement("button");
+      btn.innerText = g;
+      btn.className = "border border-gray-300 rounded-lg py-2 px-4 hover:bg-gradient-to-r hover:from-indigo-400 hover:to-purple-400 hover:text-white transition";
+      btn.onclick = () => {
+        if (!uploaded) {
+          uploadWarning.classList.remove("hidden");
+          return;
+        }
+        btn.classList.toggle("bg-gradient-to-r");
+        btn.classList.toggle("from-indigo-500");
+        btn.classList.toggle("to-purple-500");
+        btn.classList.toggle("text-white");
+        if (selectedGenres.includes(g)) selectedGenres = selectedGenres.filter(x => x !== g);
+        else selectedGenres.push(g);
+      };
+      genreContainer.appendChild(btn);
+    });
+
+    // Upload
+    uploadInput.addEventListener("change", () => {
+      uploaded = true;
+      uploadMsg.classList.remove("hidden");
+      uploadWarning.classList.add("hidden");
+    });
+
+    // Find Books
+    findBtn.addEventListener("click", () => {
+      if (!uploaded || selectedGenres.length === 0) {
+        alert("Please complete previous steps first!");
+        return;
+      }
+      loading.classList.remove("hidden");
+      recContainer.innerHTML = "";
+      setTimeout(() => {
+        loading.classList.add("hidden");
+        const sample = [
+          { title: "Hidden Realms", desc: "A thrilling journey into mysterious worlds." },
+          { title: "Creative Minds", desc: "Unlock your inner designer through imagination." },
+          { title: "Echoes of History", desc: "Dive deep into untold historical stories." }
+        ];
+        sample.forEach(book => {
+          const card = document.createElement("div");
+          card.className = "p-4 bg-gradient-to-br from-purple-50 to-indigo-50 rounded-xl shadow-lg text-left";
+          card.innerHTML = `
+            <div class="font-semibold text-lg">${book.title}</div>
+            <p class="text-sm text-gray-600">${book.desc}</p>
+            <button class="mt-3 bg-indigo-500 text-white px-4 py-2 rounded-lg hover:bg-indigo-600 saveBtn">Save for Later</button>
+          `;
+          recContainer.appendChild(card);
+        });
+
+        document.querySelectorAll(".saveBtn").forEach(btn => {
+          btn.addEventListener("click", e => {
+            const bookTitle = e.target.parentElement.querySelector(".font-semibold").textContent;
+            const bookDesc = e.target.parentElement.querySelector("p").textContent;
+            const saved = JSON.parse(localStorage.getItem("savedBooks") || "[]");
+            saved.push({ title: bookTitle, desc: bookDesc });
+            localStorage.setItem("savedBooks", JSON.stringify(saved));
+            alert("Book saved for later!");
+          });
+        });
+      }, 2000);
+    });
+  </script>
+</body>
+</html>
