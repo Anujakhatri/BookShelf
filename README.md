@@ -1,4 +1,4 @@
-# 📚 BookShelf – Your Smart Reading Companion
+#  BookShelf : Your Smart Reading Companion
 
 A modern, responsive web application with **FastAPI backend** for machine learning-powered book recommendations. Built with **HTML, TailwindCSS, and Python (FastAPI)** to help users discover, get recommendations for, and save books to their reading list.
 
