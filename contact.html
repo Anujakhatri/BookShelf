@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact – BookShelf</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <script>
+        tailwind = window.tailwind || {};
         tailwind.config = {
             theme: {
                 extend: {
@@ -35,7 +35,14 @@
                 }
             }
         }
+        ;(function(){
+            const saved = localStorage.getItem('theme');
+            if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
     </script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         body { font-family: 'Inter', sans-serif; }
@@ -47,7 +54,7 @@
         }
     </style>
 </head>
-<body class="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50 book-pattern relative overflow-x-hidden">
+<body class="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50">
     <!-- Sidebar Overlay -->
     <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden transition-opacity duration-300"></div>
     
@@ -78,12 +85,12 @@
     </div>
 
     <!-- Navigation Bar -->
-    <nav class="bg-white shadow-lg sticky top-0 z-30">
+    <nav class="bg-white">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <!-- Left side - BookShelf hamburger menu -->
                 <div class="flex items-center">
-                    <button id="open-sidebar" class="flex items-center space-x-3 text-gray-700 hover:text-indigo-600 transition duration-200">
+                    <button id="open-sidebar" class="flex items-center space-x-3 text-gray-700">
                         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         </svg>
@@ -94,9 +101,9 @@
                 <!-- Right side - Navigation links -->
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="index.html" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-200">Home</a>
-                        <a href="scan.html" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-200">Scan</a>
-                        <a href="save.html" class="text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-sm font-medium transition duration-200">Saved</a>
+                        <a href="index.html" class="text-gray-700">Home</a>
+                        <a href="scan.html" class="text-gray-700">Scan</a>
+                        <a href="save.html" class="text-gray-700">Saved</a>
                         <a href="contact.html" class="text-indigo-600 bg-indigo-100 px-3 py-2 rounded-md text-sm font-medium">Contact</a>
                     </div>
                 </div>
@@ -138,7 +145,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
             <!-- Contact Form -->
             <div class="lg:col-span-2">
-                <div class="bg-white rounded-xl shadow-lg p-8">
+                <div class="bg-white">
                     <h2 class="text-2xl font-semibold text-gray-900 mb-6">Send us a message</h2>
                     <form id="contact-form" class="space-y-6">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -191,7 +198,7 @@
             <!-- Contact Information -->
             <div class="space-y-8">
                 <!-- Contact Info Card -->
-                <div class="bg-white rounded-xl shadow-lg p-8">
+                <div class="bg-white">
                     <h3 class="text-xl font-semibold text-gray-900 mb-6">Contact Information</h3>
                     <div class="space-y-6">
                         <div class="flex items-start">
@@ -234,7 +241,7 @@
                 </div>
 
                 <!-- FAQ Card -->
-                <div class="bg-white rounded-xl shadow-lg p-8">
+                <div class="bg-white">
                     <h3 class="text-xl font-semibold text-gray-900 mb-6">Frequently Asked</h3>
                     <div class="space-y-4">
                         <div>
