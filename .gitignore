@@ -29,9 +29,8 @@ uploads/
 Thumbs.db
 
 # Environment
-.env
-.env.local
+.venv/
+__pycache__/
 
+#files
 run.sh
-.vscode
-requirements.txt
