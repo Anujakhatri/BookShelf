@@ -19,17 +19,17 @@ app = FastAPI(
 # Configure CORS to allow frontend connections
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, replace with specific origins
+    allow_origins=["*"],  # In production, replace with specific origins or allow any frontend
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# In-memory storage (replace with database in production)
+# In-memory storage (temoporary db: in-memory lists)
 books_db = []
 saved_books_db = []
 
-# Pydantic models for request/response
+# Pydantic models for request/response(data validation)
 class BookRecommendationRequest(BaseModel):
     genres: List[str]
     author_name: Optional[str] = None

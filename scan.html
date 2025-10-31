@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pick Your Reading Taste! – BookShelf</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 min-h-screen">
 
@@ -159,6 +159,29 @@
                     <input type="checkbox" class="genre-checkbox" value="Comics">
                     <span class="text-gray-700">Comics</span>
                 </label>
+                <label class="flex items-center space-x-2 cursor-pointer p-3 rounded hover:bg-purple-50 transition">
+                    <input type="checkbox" class="genre-checkbox" value="Drama">
+                    <span class="text-gray-700">Drama</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer p-3 rounded hover:bg-purple-50 transition">
+                    <input type="checkbox" class="genre-checkbox" value="Fantasy">
+                    <span class="text-gray-700">Fantasy</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer p-3 rounded hover:bg-purple-50 transition">
+                    <input type="checkbox" class="genre-checkbox" value="Romance">
+                    <span class="text-gray-700">Romance</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer p-3 rounded hover:bg-purple-50 transition">
+                    <input type="checkbox" class="genre-checkbox" value="Self-help">
+                    <span class="text-gray-700">Self-help</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer p-3 rounded hover:bg-purple-50 transition">
+                    <input type="checkbox" class="genre-checkbox" value="Other">
+                    <span class="text-gray-700">Other</span>
+                </label>
+                <!-- Hidden text area appear here -->
+                 <textarea id="other-textarea"class="hidden w-full p-2 border border-purple-300 rounded-lg focus:ring-2 focus:ring-purple-400 outline-none"
+                 placeholder="Enter your preferred genre..."></textarea>
             </div>
         </div>
 
@@ -193,159 +216,7 @@
 
     </div>
 
-  <script>
-        // Sidebar open/close handlers
-        (function() {
-            const openBtn = document.getElementById('openSidebar');
-            const closeBtn = document.getElementById('closeSidebar');
-            const overlay = document.getElementById('sidebarOverlay');
-            const panel = document.getElementById('sidebarPanel');
-
-            function open() {
-                panel.classList.remove('-translate-x-full');
-                overlay.classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
-            }
-            function close() {
-                panel.classList.add('-translate-x-full');
-                overlay.classList.add('hidden');
-                document.body.style.overflow = '';
-            }
-            openBtn && openBtn.addEventListener('click', open);
-            closeBtn && closeBtn.addEventListener('click', close);
-            overlay && overlay.addEventListener('click', close);
-            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
-        })();
-
-        // Get references to DOM elements
-        const bookPhotoInput = document.getElementById('bookPhoto');
-        const photoPreview = document.getElementById('photoPreview');
-        const previewImg = document.getElementById('previewImg');
-        const getRecommendationBtn = document.getElementById('getRecommendationBtn');
-        const resultsSection = document.getElementById('resultsSection');    //Section where api results will appear
-        const recommendationsDiv = document.getElementById('recommendations'); //recommendated books or related info will be added
-
-        // API Base URL - FastAPI backend
-        const API_BASE_URL = 'http://localhost:8000';
-
-        // Handle photo upload and preview
-        bookPhotoInput.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    previewImg.src = e.target.result;
-                    photoPreview.classList.remove('hidden');
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-
-        // Handle Get Recommendation button click - Now calls FastAPI
-        getRecommendationBtn.addEventListener('click', async function() {
-            // Show loading state
-            getRecommendationBtn.disabled = true;
-            getRecommendationBtn.textContent = '⏳ Loading...';
-
-            try {
-                // Get selected genres
-                const selectedGenres = Array.from(document.querySelectorAll('.genre-checkbox:checked'))
-                    .map(cb => cb.value);
-                const authorName = document.getElementById('authorName').value;
-
-                // Call FastAPI backend
-                const response = await fetch(`${API_BASE_URL}/recommendations`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        genres: selectedGenres,
-                        author_name: authorName || null
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error('Failed to get recommendations');
-                }
-
-                const data = await response.json();
-                
-                // Display recommendations from API
-                displayRecommendations(data.recommendations);
-
-                // Reset button state
-                getRecommendationBtn.disabled = false;
-                getRecommendationBtn.textContent = '👩🏻‍🏫 Get Recommendations';
-
-            } catch (error) {
-                console.error('Error fetching recommendations:', error);
-                alert('⚠️ Failed to connect to API. Make sure the FastAPI server is running on http://localhost:8000');
-                
-                // Reset button state
-                getRecommendationBtn.disabled = false;
-                getRecommendationBtn.textContent = '👩🏻‍🏫 Get Recommendations';
-            }
-        });
-
-        // Display recommendations on the page
-        function displayRecommendations(books) {
-            // Clear previous recommendations
-            recommendationsDiv.innerHTML = '';
-
-            books.forEach((book, index) => {
-                const bookCard = document.createElement('div');
-                bookCard.className = 'border border-gray-200 rounded-lg p-6 hover:shadow-lg transition';
-                bookCard.innerHTML = `
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">${book.title}</h3>
-                    <p class="text-gray-600 mb-4">${book.description}</p>
-                    <button onclick="saveBook(${index})" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition">
-                        ❤️ Save Book
-                    </button>
-                `;
-                recommendationsDiv.appendChild(bookCard);
-            });
-
-            // Store recommendations in a global variable for save function
-            window.currentRecommendations = books;
-
-            // Show results section
-            resultsSection.classList.remove('hidden');
-            resultsSection.scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // Save book to FastAPI backend
-        async function saveBook(index) {
-            const book = window.currentRecommendations[index];
-            
-            try {
-                // Call FastAPI to save the book
-                const response = await fetch(`${API_BASE_URL}/saved-books`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        title: book.title,
-                        description: book.description,
-                        author: null
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error('Failed to save book');
-                }
-
-                const data = await response.json();
-                
-                // Show success message
-                alert(`✨ "${book.title}" saved successfully!`);
-            } catch (error) {
-                console.error('Error saving book:', error);
-                alert('⚠️ Failed to save book. Make sure the FastAPI server is running.');
-            }
-        }
-  </script>
+  <script src="scan.js"></script>
 
 </body>
 </html>
