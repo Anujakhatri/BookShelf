@@ -1,0 +1,107 @@
+/* Sidebar */
+.sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 50;
+}
+
+.sidebar-panel {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 80%;
+    max-width: 320px;
+    background: white;
+    z-index: 60;
+    transition: transform 0.3s ease;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.15);
+}
+
+/* Body content container */
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 2rem;
+}
+
+/* Cards */
+.card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    margin-bottom: 1.5rem;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.genre-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.genre-item:hover {
+    background: #f3e8ff;
+}
+
+/* Inputs */
+.input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+}
+
+.input:focus {
+    border-color: #a855f7;
+    box-shadow: 0 0 0 2px #e9d5ff;
+}
+
+/* Buttons */
+.btn-primary {
+    background: #7c3aed;
+    color: white;
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    transition: 0.2s;
+}
+
+.btn-primary:hover {
+    background: #6d28d9;
+    transform: scale(1.05);
+}
+
+.btn-green {
+    background: #059669;
+    color: white;
+    padding: 12px 26px;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.btn-green:hover {
+    background: #047857;
+    transform: scale(1.05);
+}
+
+.other-textarea {
+    margin-top: 1rem;
+    padding: 12px;
+    width: 100%;
+    border-radius: 8px;
+    border: 1px solid #d8b4fe;
+}

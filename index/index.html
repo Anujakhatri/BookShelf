@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BookShelf – Your Smart Reading Companion</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="index.css">
 </head>
 <body class="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 min-h-screen">
 
@@ -22,9 +23,9 @@
                     <span class="text-2xl font-bold text-purple-600">BookShelf</span>
                 </div>
                 <div class="hidden md:flex space-x-8 items-center">
-                    <a href="index.html" class="text-purple-600 font-semibold hover:text-purple-800 transition">Home</a>
-                    <a href="scan.html" class="text-gray-600 hover:text-purple-600 transition">Scan</a>
-                    <a href="save.html" class="text-gray-600 hover:text-purple-600 transition">Saved</a>
+                    <a href="index/index.html" class="text-purple-600 font-semibold hover:text-purple-800 transition">Home</a>
+                    <a href="scan/scan.html" class="text-gray-600 hover:text-purple-600 transition">Scan</a>
+                    <a href="save/save.html" class="text-gray-600 hover:text-purple-600 transition">Saved</a>
                     <a href="contact.html" class="text-gray-600 hover:text-purple-600 transition">Contact</a>
                 </div>
             </div>
@@ -53,13 +54,13 @@
                 </p>
             </div>
             <nav class="space-y-2">
-                <a href="index.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-purple-50">
+                <a href="index/index.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-purple-50">
                     <span>🏠</span><span class="text-gray-800">Home</span>
                 </a>
-                <a href="scan.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-purple-50">
+                <a href="scan/scan.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-purple-50">
                     <span>🔍</span><span class="text-gray-800">Scan</span>
                 </a>
-                <a href="save.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-purple-50">
+                <a href="save/save.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-purple-50">
                     <span>❤️</span><span class="text-gray-800">Saved</span>
                 </a>
                 <a href="contact.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-purple-50">
@@ -113,7 +114,7 @@
 
     <!-- Call to Action Section -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center">
-        <a href="scan.html" class="inline-block bg-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-purple-700 transition shadow-lg hover:shadow-xl">
+        <a href="scan/scan.html" class="inline-block bg-purple-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-purple-700 transition shadow-lg hover:shadow-xl">
             Get Started →
         </a>
     </section>
@@ -146,61 +147,8 @@
         </div>
     </footer>
 
-    <style>
-        /* Custom animations */
-        @keyframes fade-in {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        @keyframes slide-up {
-            from { 
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to { 
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
 
-        .animate-fade-in {
-            animation: fade-in 0.8s ease-in;
-        }
-
-        .animate-slide-up {
-            animation: slide-up 1s ease-out;
-        }
-
-        .animate-slide-up-delay {
-            animation: slide-up 1s ease-out 0.2s backwards;
-        }
-    </style>
-
-    <script>
-        // Sidebar open/close handlers
-        (function() {
-            const openBtn = document.getElementById('openSidebar');
-            const closeBtn = document.getElementById('closeSidebar');
-            const overlay = document.getElementById('sidebarOverlay');
-            const panel = document.getElementById('sidebarPanel');
-
-            function open() {
-                panel.classList.remove('-translate-x-full');
-                overlay.classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
-            }
-            function close() {
-                panel.classList.add('-translate-x-full');
-                overlay.classList.add('hidden');
-                document.body.style.overflow = '';
-            }
-            openBtn && openBtn.addEventListener('click', open);
-            closeBtn && closeBtn.addEventListener('click', close);
-            overlay && overlay.addEventListener('click', close);
-            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
-         })();
-    </script>
+    <script src="index.js"></script>
 
 </body>
 </html>

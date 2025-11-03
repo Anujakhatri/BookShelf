@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pick Your Reading Taste! – BookShelf</title>
+    
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Your custom CSS -->
+    <link rel="stylesheet" href="scan.css">
+</head>
+<body class="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 min-h-screen">
+
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <button id="openSidebar" class="p-2 rounded-md hover:bg-purple-50">
+                        <svg class="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                  d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                    <span class="text-2xl font-bold text-purple-600">📚 BookShelf</span>
+                </div>
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="scan.html" class="text-purple-600 font-semibold">Scan</a>
+                    <a href="save.html" class="nav-link">Saved</a>
+                    <a href="contact.html" class="nav-link">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar overlay + panel -->
+    <div id="sidebarOverlay" class="sidebar-overlay hidden"></div>
+    <aside id="sidebarPanel" class="sidebar-panel -translate-x-full">
+        <div class="p-6 h-full flex flex-col">
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center space-x-2">
+                    <span class="text-2xl">📚</span>
+                    <span class="text-xl font-bold text-purple-600">BookShelf</span>
+                </div>
+                <button id="closeSidebar" class="p-2 rounded-md hover:bg-gray-100">
+                    ✖
+                </button>
+            </div>
+
+            <nav class="space-y-2">
+                <a href="index/index.html" class="sidebar-link">🏠 Home</a>
+                <a href="scan/scan.html" class="sidebar-link">🔍 Scan</a>
+                <a href="save/save.html" class="sidebar-link">❤️ Saved</a>
+                <a href="contact.html" class="sidebar-link">✉️ Contact</a>
+            </nav>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="container">
+        
+        <!-- Page Title -->
+        <div class="text-center mb-10">
+            <h1 class="title">🔍 Pick Your Reading Taste!</h1>
+            <p class="text-gray-600">Follow the steps below to get personalized book recommendations</p>
+        </div>
+
+        <!-- ✅ Step 1: Upload Photo -->
+        <div class="card">
+            <h2 class="card-title">Step 1: Upload a Book Photo</h2>
+            <div class="upload-area">
+                <input type="file" id="bookPhoto" accept="image/*" class="hidden">
+                <label for="bookPhoto" class="cursor-pointer block">
+                    <div class="text-6xl mb-4">📷</div>
+                    <p>Click to upload or drag and drop</p>
+                    <p class="text-sm text-gray-400">PNG, JPG, GIF up to 10MB</p>
+                </label>
+            </div>
+            <div id="photoPreview" class="hidden mt-4">
+                <img id="previewImg" src="" alt="Preview" class="max-w-xs rounded-lg shadow-md">
+            </div>
+        </div>
+
+        <!-- ✅ Step 2: Preferences -->
+        <div class="card">
+            <h2 class="card-title">Step 2: Choose Your Reading Preferences</h2>
+            <p class="text-gray-600 mb-6">Select all that apply:</p>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <!-- 18 genres -->
+                <label class="genre-item"><input type="checkbox" class="genre-checkbox" value="History"> History</label>
+                <label class="genre-item"><input type="checkbox" class="genre-checkbox" value="Design"> Design</label>
+                <label class="genre-item"><input type="checkbox" class="genre-checkbox" value="Fiction"> Fiction</label>
+                <label class="genre-item"><input type="checkbox" class="genre-checkbox" value="Non-fiction"> Non-fiction</label>
+                <label class="genre-item"><input type="checkbox" class="genre-checkbox" value="Business"> Business</label>
+                <label class="genre-item"><input type="checkbox" class="genre-checkbox" value="Science"> Science</label>
+                <label class="genre-item"><input type="checkbox" class="genre-checkbox" value="Mystery"> Mystery</label>
+                <label class="genre-item"><input type="checkbox" class="genre-checkbox" value="Biography"> Biography</label>
+                <label class="genre-item"><input type="checkbox" class="genre-checkbox" value="Thriller"> Thriller</label>
+                <label class="genre-item"><input type="checkbox" class="genre-checkbox" value="Poetry"> Poetry</label>
+                <label class="genre-item"><input type="checkbox" class="genre-checkbox" value="Classic"> Classic</label>
+                <label class="genre-item"><input type="checkbox" class="genre-checkbox" value="Adult"> Adult</label>
+                <label class="genre-item"><input type="checkbox" class="genre-checkbox" value="Horror"> Horror</label>
+                <label class="genre-item"><input type="checkbox" class="genre-checkbox" value="Comics"> Comics</label>
+                <label class="genre-item"><input type="checkbox" class="genre-checkbox" value="Drama"> Drama</label>
+                <label class="genre-item"><input type="checkbox" class="genre-checkbox" value="Fantasy"> Fantasy</label>
+                <label class="genre-item"><input type="checkbox" class="genre-checkbox" value="Romance"> Romance</label>
+                <label class="genre-item"><input type="checkbox" class="genre-checkbox" value="Self-help"> Self-help</label>
+                <label class="genre-item"><input type="checkbox" class="genre-checkbox" value="Other"> Other</label>
+            </div>
+
+            <textarea id="other-textarea" class="hidden other-textarea" placeholder="Enter your custom genre..."></textarea>
+        </div>
+
+        <!-- ✅ Step 3 -->
+        <div class="card">
+            <h2 class="card-title">Step 3: Author Name (Optional)</h2>
+            <input id="authorName" class="input" placeholder="Enter author name">
+        </div>
+
+        <!-- ✅ Step 4 -->
+        <div class="text-center mb-6">
+            <button id="getRecommendationBtn" class="btn-primary">
+                👩🏻‍🏫 Get Recommendations
+            </button>
+        </div>
+
+        <!-- ✅ Results -->
+        <div id="resultsSection" class="hidden">
+            <div class="card">
+                <h2 class="card-title">📚 Recommended Books</h2>
+                <div id="recommendations" class="space-y-4"></div>
+            </div>
+
+            <div class="text-center">
+                <a href="save/save.html" class="btn-green">View Saved Books →</a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ✅ External JS file -->
+    <script src="scan.js"></script>
+</body>
+</html>
