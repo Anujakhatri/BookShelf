@@ -22,9 +22,6 @@
     document.addEventListener("keydown", e => e.key === "Escape" && close());
 })();
 
-// Backend API
-const API_BASE_URL = "http://localhost:8000";
-
 const booksGrid = document.getElementById("booksGrid");
 const emptyState = document.getElementById("emptyState");
 const bookModal = document.getElementById("bookModal");
@@ -36,7 +33,7 @@ displaySavedBooks();
 
 async function displaySavedBooks() {
     try {
-        const response = await fetch(`${API_BASE_URL}/saved-books`);
+        const response = await fetch("/saved-books");
         if (!response.ok) throw new Error("Failed to fetch");
 
         const data = await response.json();
@@ -108,7 +105,7 @@ async function removeBook(id) {
     if (!confirm("Remove this book?")) return;
 
     try {
-        const res = await fetch(`${API_BASE_URL}/saved-books/${id}`, {
+        const res = await fetch(`/saved-books/${id}`, {
             method: "DELETE",
         });
         if (!res.ok) throw new Error("Error");
@@ -116,7 +113,7 @@ async function removeBook(id) {
         displaySavedBooks();
         alert("✨ Book removed!");
     } catch (e) {
-        alert("⚠️ Failed to remove book.");
+        alert("⚠️ Failed to remove book. Make sure FastAPI server is running.");
     }
 }
 

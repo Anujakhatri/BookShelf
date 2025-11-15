@@ -3,7 +3,8 @@ A machine learning-powered book recommendation system
 """
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from typing import List, Optional
 import os
@@ -46,9 +47,33 @@ class SaveBookRequest(BaseModel):
     title: str
     description: str
 
+# Define page routes BEFORE mounting static files (routes take precedence)
 @app.get("/")
 async def root():
-    """Root endpoint - API information"""
+    """Serve index.html"""
+    return FileResponse(os.path.join(os.path.dirname(__file__), "static", "index", "index.html"))
+
+@app.get("/scan")
+async def scan_page():
+    """Serve scan.html"""
+    return FileResponse(os.path.join(os.path.dirname(__file__), "static", "scan", "scan.html"))
+
+@app.get("/save")
+async def save_page():
+    """Serve save.html"""
+    return FileResponse(os.path.join(os.path.dirname(__file__), "static", "save", "save.html"))
+
+@app.get("/contact")
+async def contact_page():
+    """Serve contact.html"""
+    return FileResponse(os.path.join(os.path.dirname(__file__), "static", "contact.html"))
+
+# Mount static files directory AFTER routes (for CSS, JS, images)
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+@app.get("/api")
+async def api_info():
+    """API information endpoint"""
     return {
         "message": "Welcome to BookShelf API",
         "version": "1.0.0",
@@ -215,6 +240,31 @@ async def delete_saved_book(book_id: int):
         
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to delete book: {str(e)}")
+
+class ContactRequest(BaseModel):
+    name: str
+    email: str
+    subject: Optional[str] = None
+    message: str
+
+@app.post("/contact")
+async def submit_contact(request: ContactRequest):
+    """Handle contact form submission"""
+    try:
+        # In production, you would send an email here
+        # For now, just log and return success
+        print(f"Contact form submission:")
+        print(f"  Name: {request.name}")
+        print(f"  Email: {request.email}")
+        print(f"  Subject: {request.subject}")
+        print(f"  Message: {request.message}")
+        
+        return {
+            "message": "Thank you! Your message has been received.",
+            "status": "success"
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to submit contact form: {str(e)}")
 
 if __name__ == "__main__":
     import uvicorn

@@ -33,9 +33,6 @@ bookPhoto.addEventListener("change", () => {
     }
 });
 
-// -------------------- API CONFIG --------------------
-const API_BASE_URL = "http://localhost:8000";
-
 // -------------------- GET RECOMMENDATION --------------------
 const btn = document.getElementById("getRecommendationBtn");
 const results = document.getElementById("resultsSection");
@@ -50,8 +47,31 @@ btn.addEventListener("click", async () => {
 
     const author = document.getElementById("authorName").value;
 
+    // Upload image if selected
+    let imageUploaded = false;
+    const photoFile = bookPhoto.files[0];
+    if (photoFile) {
+        try {
+            const formData = new FormData();
+            formData.append("file", photoFile);
+            
+            const uploadRes = await fetch("/upload-image", {
+                method: "POST",
+                body: formData
+            });
+            
+            if (uploadRes.ok) {
+                imageUploaded = true;
+                console.log("Image uploaded successfully");
+            }
+        } catch (err) {
+            console.warn("Image upload failed, continuing without image:", err);
+        }
+    }
+
+    // Get recommendations
     try {
-        const res = await fetch(`${API_BASE_URL}/recommendations`, {
+        const res = await fetch("/recommendations", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({
@@ -66,7 +86,7 @@ btn.addEventListener("click", async () => {
         displayRecommendations(data.recommendations);
 
     } catch (err) {
-        alert("⚠️ Failed to connect to API");
+        alert("⚠️ Failed to connect to API. Make sure FastAPI server is running.");
         console.error(err);
 
     } finally {
@@ -99,10 +119,14 @@ async function saveBook(i) {
     const book = window.currentRecommendations[i];
 
     try {
-        const res = await fetch(`${API_BASE_URL}/saved-books`, {
+        const res = await fetch("/saved-books", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(book)
+            body: JSON.stringify({
+                title: book.title,
+                description: book.description,
+                author: null
+            })
         });
 
         if (!res.ok) throw new Error("Save failed");
@@ -111,6 +135,6 @@ async function saveBook(i) {
 
     } catch (err) {
         console.error(err);
-        alert("⚠️ Could not save book");
+        alert("⚠️ Could not save book. Make sure FastAPI server is running.");
     }
 }
