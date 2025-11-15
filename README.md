@@ -124,20 +124,6 @@ The backend is structured to integrate ML models:
 3. **NLP Analysis**: Sentiment analysis on book descriptions
 4. **Content-Based Filtering**: Embed book descriptions using transformers
 
-## 🎯 Project Structure
-
-```
-BookShelf/
-├── index.html          # Homepage
-├── scan.html           # Upload & recommendations
-├── save.html           # Saved books display
-├── contact.html         # Contact form
-├── main.py             # FastAPI backend
-├── requirements.txt    # Python dependencies
-├── uploads/           # Uploaded book images (created automatically)
-└── README.md          # This file
-```
-
 ## 🔧 Development
 
 ### Running the Backend
