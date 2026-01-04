@@ -1,6 +1,30 @@
 """
 A machine learning-powered book recommendation system
 """
+from flask import Flask, send_from_directory
+
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return send_from_directory("static/index", "index.html")
+
+@app.route("/scan")
+def scan():
+    return send_from_directory("static/scan", "scan.html")
+
+@app.route("/save")
+def save():
+    return send_from_directory("static/save", "save.html")
+
+@app.route("/contact")
+def contact():
+    return send_from_directory("static", "contact.html")
+
+if __name__ == "__main__":
+    app.run(debug=True)
+
+
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, FileResponse
