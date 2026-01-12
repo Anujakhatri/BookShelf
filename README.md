@@ -236,5 +236,3 @@ This project is open source and available for learning purposes.
 ---
 
 **Built with ❤️ for book lovers everywhere** 📚✨
-
-Happy Reading and Happy Coding!
